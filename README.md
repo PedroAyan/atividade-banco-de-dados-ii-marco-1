@@ -38,6 +38,7 @@ sql/
   01-create-tables.sql
   02-insert-data.sql
   03-consultas.sql
+  99-validacao.sql
 ```
 
 ## Execução
@@ -100,6 +101,26 @@ docker compose exec -T postgres psql -X -U postgres -d matricula_academica -c '\
 ```
 
 O resultado esperado é uma lista com as 16 tabelas do modelo.
+
+### Conferir a entrega (opcional)
+
+O arquivo `sql/99-validacao.sql` **não faz parte da criação do banco**: a ordem
+normal continua sendo 01, 02 e 03. Ele existe para conferir, depois que 01 e 02
+rodaram, se a entrega do Marco 1 está íntegra.
+
+```bash
+docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matricula_academica < sql/99-validacao.sql
+```
+
+São verificações **somente leitura** (a transação é `READ ONLY`), então o script
+não altera nenhum dado e pode ser executado quantas vezes quiser. Ele confere o
+schema, as 16 tabelas pelo nome, as chaves primárias, os 18 relacionamentos do
+modelo um a um, a ausência de FK em `log_matricula`, as colunas geradas, os
+mínimos exigidos pelo enunciado (100 alunos, 6 turmas, 300 matrículas) e a
+existência de turma sem matrícula para a consulta 04.
+
+Em caso de sucesso, termina com um resumo. Havendo qualquer inconsistência, ele
+encerra com erro e lista todos os problemas encontrados de uma vez.
 
 ### Recomeçar do zero
 
