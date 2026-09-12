@@ -17,11 +17,6 @@ Desenvolver um banco de dados relacional capaz de armazenar e gerenciar informa�
 - SQL
 - Git/GitHub
 
-## Modelo Inicial
-
-O diagrama abaixo apresenta uma visão inicial do domínio do Sistema de Matrícula Acadêmica.
-
-![Modelo inicial](docs/modelo/modelo-relacional.png)
 
 ## Status
 
