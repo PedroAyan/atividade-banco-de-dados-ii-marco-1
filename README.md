@@ -55,13 +55,13 @@ docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matric
 docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matricula_academica < sql/02-insert-data.sql
 ```
 
-### passo 6 — Executar as 10 consultas
+5.  Executar as 10 consultas
 
 ```bash
 docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matricula_academica < sql/03-consultas.sql
 ```
 
-5. Liste as tabelas:
+6. Liste as tabelas:
 
 ```bash
 docker compose exec -T postgres psql -X -U postgres -d matricula_academica -c '\dt academico.*'
