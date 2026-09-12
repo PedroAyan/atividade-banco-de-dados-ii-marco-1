@@ -100,9 +100,16 @@ SELECT nivel,codigo,nome,caminho
 FROM cadeia ORDER BY caminho;
 
 -- 08. Disciplinas que um aluno já pode cursar — requisito recursivo obrigatório.
--- Critério: pertence ao currículo, ainda não foi aprovada e TODOS os
--- pré-requisitos diretos e indiretos foram aprovados antes do semestre-alvo.
--- Também exclui matrícula ativa sem conclusão no semestre-alvo.
+-- Recorte temporal: a consulta responde o que o aluno pode cursar NO INÍCIO do
+-- semestre-alvo. Todo o julgamento usa apenas fatos anteriores a esse início.
+-- Critério: pertence ao currículo, ainda não foi aprovada em período anterior e
+-- TODOS os pré-requisitos diretos e indiretos foram aprovados em período
+-- letivo estritamente anterior ao alvo (pl.data_fim < data_inicio do alvo).
+-- Uma disciplina em que o aluno JÁ ESTÁ matriculado no próprio semestre-alvo
+-- não é "nova elegibilidade" e é excluída, qualquer que seja o resultado final
+-- simulado dessa matrícula. A carga preenche as notas de 2026/2 como se o
+-- semestre já tivesse terminado; sem essa exclusão a disciplina em curso
+-- reapareceria como elegível para o semestre em que ela está sendo cursada.
 -- Resultado = elegibilidade por currículo/pré-requisitos; não promete oferta,
 -- vagas ou compatibilidade de horários. A carga não contém co-requisitos.
 -- Se houver co-requisitos, o resultado os sinaliza para validação conjunta.
@@ -114,6 +121,8 @@ parametros AS (
     FROM aluno a CROSS JOIN periodo_letivo p
     WHERE a.matricula='20250001' AND p.ano=2026 AND p.semestre=2
 ),
+-- Aprovações válidas como pré-requisito: só períodos encerrados ANTES do
+-- início do semestre-alvo. O próprio semestre-alvo nunca entra aqui.
 aprovadas AS (
     SELECT DISTINCT t.disciplina_id
     FROM parametros p
@@ -156,13 +165,15 @@ WHERE NOT EXISTS (
           SELECT 1 FROM aprovadas a WHERE a.disciplina_id=dep.requisito_id
       ))
 )
+-- Exclui o que o aluno já tem matriculado no próprio semestre-alvo.
+-- Não se olha a situacao do histórico: no início do semestre-alvo esse
+-- resultado ainda não existe, e considerá-lo devolveria como "nova
+-- elegibilidade" uma disciplina que o aluno já está cursando.
 AND NOT EXISTS (
     SELECT 1 FROM matricula m
     JOIN turma t ON t.id=m.turma_id
-    LEFT JOIN historico h ON h.matricula_id=m.id
     WHERE m.aluno_id=p.aluno_id AND t.disciplina_id=c.id
       AND t.periodo_letivo_id=p.periodo_id AND m.status='MATRICULADO'
-      AND (h.id IS NULL OR h.situacao='CURSANDO')
 )
 ORDER BY c.periodo,c.codigo;
 
