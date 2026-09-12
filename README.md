@@ -53,19 +53,24 @@ git clone https://github.com/PedroAyan/atividade-banco-de-dados-ii-marco-1.git
 cd atividade-banco-de-dados-ii-marco-1
 ```
 
-2. Iniciar o ambiente:
+2. Iniciar o ambiente e esperar o banco ficar realmente pronto:
 
 ```bash
-docker compose up -d
+docker compose up -d --wait
 ```
 
-3. Aguardar o PostgreSQL aceitar conexões:
+O `--wait` só devolve o controle quando o healthcheck do serviço confirma que o
+PostgreSQL **definitivo** está aceitando conexões. Na primeira execução, com o
+volume vazio, isso demora alguns segundos a mais, porque o contêiner ainda
+precisa inicializar o banco antes de liberar o servidor final.
+
+3. Conferir que o serviço está saudável:
 
 ```bash
-docker compose exec postgres pg_isready -U postgres -d matricula_academica
+docker compose ps
 ```
 
-Repita até a saída ser `accepting connections`.
+A coluna `STATUS` deve mostrar `Up ... (healthy)`.
 
 4. Criar o schema e as tabelas (**uma única vez, em um banco novo**):
 
@@ -127,6 +132,12 @@ docker compose down -v
   08 avalia a elegibilidade **no início** do semestre-alvo: só considera
   aprovações de períodos encerrados antes dele e ignora o resultado simulado da
   matrícula do próprio semestre-alvo.
+- O healthcheck do `docker-compose.yml` testa `pg_isready -h 127.0.0.1`, e não o
+  socket Unix. Ao inicializar um volume novo, a imagem oficial do PostgreSQL sobe
+  um servidor temporário que escuta apenas no socket e depois o desliga. Uma
+  verificação pelo socket pode, por isso, reportar "pronto" cedo demais e fazer o
+  passo seguinte falhar com `the database system is shutting down`. Só o servidor
+  definitivo aceita conexões TCP.
 - As duas turmas de Programação Paralela ficam intencionalmente sem matrículas,
   pois nenhum aluno tem aprovação em Sistemas Operacionais. Isso dá à consulta
   04 um caso real de junção externa.

@@ -11,6 +11,16 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    # Prontidao real do banco. O "-h 127.0.0.1" e essencial: ao inicializar
+    # um volume novo, a imagem oficial sobe um servidor temporario que escuta
+    # apenas no socket Unix e depois e desligado. So o servidor definitivo
+    # aceita conexoes TCP, entao este teste nunca fica saudavel cedo demais.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d matricula_academica"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
 
 volumes:
   postgres_data:
