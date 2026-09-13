@@ -12,8 +12,8 @@ Responsável por:
 Matrícula: 2512130049
 
 Responsável por:
-- Transações e concorrência.
-- Administração e operação.
+- Configuração do PostgreSQL com Docker Compose.
+- Desenvolvimento do DDL e das restrições do banco.
 
 ## Observação sobre a composição do grupo
 
