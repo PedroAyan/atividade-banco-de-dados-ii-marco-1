@@ -32,6 +32,7 @@ automática por gatilho nem controle de disputa pela última vaga.
 ```
 README.md
 AUTORES.md
+diagramabancodedadosii.drawio
 diagramabancodedadosii.drawio.pdf
 docker-compose.yml
 sql/
@@ -100,7 +101,7 @@ docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matric
 docker compose exec -T postgres psql -X -U postgres -d matricula_academica -c '\dt academico.*'
 ```
 
-O resultado esperado é uma lista com as 16 tabelas do modelo.
+O resultado esperado é uma lista com as 16 tabelas do modelo, todas com o prefixo `tb_`.
 
 ### Conferir a entrega (opcional)
 
@@ -115,7 +116,7 @@ docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matric
 São verificações **somente leitura** (a transação é `READ ONLY`), então o script
 não altera nenhum dado e pode ser executado quantas vezes quiser. Ele confere o
 schema, as 16 tabelas pelo nome, as chaves primárias, os 18 relacionamentos do
-modelo um a um, a ausência de FK em `log_matricula`, as colunas geradas, os
+modelo um a um, a ausência de FK em `tb_log_matricula`, as colunas geradas, os
 mínimos exigidos pelo enunciado (100 alunos, 6 turmas, 300 matrículas) e a
 existência de turma sem matrícula para a consulta 04.
 
@@ -135,7 +136,7 @@ docker compose down -v
 
 ## Decisões e limites desta etapa
 
-- `log_matricula.matricula_id` permanece sem FK, conforme o modelo lógico
+- `tb_log_matricula.id_matricula` permanece sem FK, conforme o modelo lógico
   fornecido. A tabela recebe apenas o registro explícito da carga inicial; não
   há gatilho de auditoria neste marco.
 - As PKs compostas representam as associações currículo–disciplina e
