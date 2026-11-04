@@ -143,18 +143,18 @@ BEGIN
     -- 6. Colunas geradas.
     IF (SELECT is_generated FROM information_schema.columns
         WHERE table_schema = 'academico' AND table_name = 'tb_disciplina'
-          AND column_name = 'ch_total') = 'ALWAYS' THEN
-        RAISE NOTICE '[OK]    tb_disciplina.ch_total e coluna gerada';
+          AND column_name = 'ch_total_disciplina') = 'ALWAYS' THEN
+        RAISE NOTICE '[OK]    tb_disciplina.ch_total_disciplina e coluna gerada';
     ELSE
-        falhas := falhas || 'tb_disciplina.ch_total nao e coluna gerada'::text;
+        falhas := falhas || 'tb_disciplina.ch_total_disciplina nao e coluna gerada'::text;
     END IF;
 
     IF (SELECT is_generated FROM information_schema.columns
         WHERE table_schema = 'academico' AND table_name = 'tb_historico'
-          AND column_name = 'media_final') = 'ALWAYS' THEN
-        RAISE NOTICE '[OK]    tb_historico.media_final e coluna gerada';
+          AND column_name = 'media_final_historico') = 'ALWAYS' THEN
+        RAISE NOTICE '[OK]    tb_historico.media_final_historico e coluna gerada';
     ELSE
-        falhas := falhas || 'tb_historico.media_final nao e coluna gerada'::text;
+        falhas := falhas || 'tb_historico.media_final_historico nao e coluna gerada'::text;
     END IF;
 
     -- 7. Minimos exigidos pelo enunciado do Marco 1.
@@ -197,7 +197,7 @@ BEGIN
     SELECT count(*) INTO n_vazias FROM (
         SELECT t.id_turma
         FROM tb_turma t
-        LEFT JOIN tb_matricula m ON m.id_turma = t.id_turma AND m.status = 'MATRICULADO'
+        LEFT JOIN tb_matricula m ON m.id_turma = t.id_turma AND m.status_matricula = 'MATRICULADO'
         GROUP BY t.id_turma
         HAVING count(m.id_matricula) = 0) x;
     IF n_vazias >= 1 THEN
