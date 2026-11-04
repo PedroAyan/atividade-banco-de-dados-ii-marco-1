@@ -27,32 +27,32 @@ DECLARE
 
     -- As 16 tabelas do modelo lógico fornecido.
     tabelas_esperadas text[] := ARRAY[
-        'aluno','campus','curriculo','curriculo_disciplina','curso',
-        'disciplina','feriado','historico','log_matricula','matricula',
-        'periodo_letivo','pre_requisito','professor','sala','turma',
-        'turma_horario'];
+        'tb_aluno','tb_campus','tb_curriculo','tb_curriculo_disciplina','tb_curso',
+        'tb_disciplina','tb_feriado','tb_historico','tb_log_matricula','tb_matricula',
+        'tb_periodo_letivo','tb_pre_requisito','tb_professor','tb_sala','tb_turma',
+        'tb_turma_horario'];
 
-    -- Os 18 relacionamentos (R01-R18) do modelo lógico, no formato
+    -- Os 18 relacionamentos (chaves estrangeiras) do modelo lógico, no formato
     -- "tabela.coluna -> tabela_referenciada".
     fks_esperadas text[] := ARRAY[
-        'curso.campus_id -> campus',
-        'curriculo.curso_id -> curso',
-        'curriculo_disciplina.curriculo_id -> curriculo',
-        'curriculo_disciplina.disciplina_id -> disciplina',
-        'pre_requisito.disciplina_id -> disciplina',
-        'pre_requisito.requisito_id -> disciplina',
-        'sala.campus_id -> campus',
-        'feriado.campus_id -> campus',
-        'turma.disciplina_id -> disciplina',
-        'turma.periodo_letivo_id -> periodo_letivo',
-        'turma.professor_id -> professor',
-        'turma_horario.turma_id -> turma',
-        'turma_horario.sala_id -> sala',
-        'aluno.curso_id -> curso',
-        'aluno.curriculo_id -> curriculo',
-        'matricula.aluno_id -> aluno',
-        'matricula.turma_id -> turma',
-        'historico.matricula_id -> matricula'];
+        'tb_curso.id_campus -> tb_campus',
+        'tb_curriculo.id_curso -> tb_curso',
+        'tb_curriculo_disciplina.id_curriculo -> tb_curriculo',
+        'tb_curriculo_disciplina.id_disciplina -> tb_disciplina',
+        'tb_pre_requisito.id_disciplina -> tb_disciplina',
+        'tb_pre_requisito.id_requisito -> tb_disciplina',
+        'tb_sala.id_campus -> tb_campus',
+        'tb_feriado.id_campus -> tb_campus',
+        'tb_turma.id_disciplina -> tb_disciplina',
+        'tb_turma.id_periodo_letivo -> tb_periodo_letivo',
+        'tb_turma.id_professor -> tb_professor',
+        'tb_turma_horario.id_turma -> tb_turma',
+        'tb_turma_horario.id_sala -> tb_sala',
+        'tb_aluno.id_curso -> tb_curso',
+        'tb_aluno.id_curriculo -> tb_curriculo',
+        'tb_matricula.id_aluno -> tb_aluno',
+        'tb_matricula.id_turma -> tb_turma',
+        'tb_historico.id_matricula -> tb_matricula'];
 BEGIN
     RAISE NOTICE '=== Validacao do Marco 1 ===';
 
@@ -130,38 +130,38 @@ BEGIN
         END IF;
     END IF;
 
-    -- 5. log_matricula.matricula_id continua SEM FK, conforme o modelo fornecido.
+    -- 5. tb_log_matricula.id_matricula continua SEM FK, conforme o modelo fornecido.
     SELECT count(*) INTO n
     FROM pg_constraint
-    WHERE conrelid = 'academico.log_matricula'::regclass AND contype = 'f';
+    WHERE conrelid = 'academico.tb_log_matricula'::regclass AND contype = 'f';
     IF n = 0 THEN
-        RAISE NOTICE '[OK]    log_matricula.matricula_id permanece sem FK (conforme o modelo)';
+        RAISE NOTICE '[OK]    tb_log_matricula.id_matricula permanece sem FK (conforme o modelo)';
     ELSE
-        falhas := falhas || 'log_matricula ganhou FK; o modelo fornecido nao preve nenhuma'::text;
+        falhas := falhas || 'tb_log_matricula ganhou FK; o modelo fornecido nao preve nenhuma'::text;
     END IF;
 
     -- 6. Colunas geradas.
     IF (SELECT is_generated FROM information_schema.columns
-        WHERE table_schema = 'academico' AND table_name = 'disciplina'
+        WHERE table_schema = 'academico' AND table_name = 'tb_disciplina'
           AND column_name = 'ch_total') = 'ALWAYS' THEN
-        RAISE NOTICE '[OK]    disciplina.ch_total e coluna gerada';
+        RAISE NOTICE '[OK]    tb_disciplina.ch_total e coluna gerada';
     ELSE
-        falhas := falhas || 'disciplina.ch_total nao e coluna gerada'::text;
+        falhas := falhas || 'tb_disciplina.ch_total nao e coluna gerada'::text;
     END IF;
 
     IF (SELECT is_generated FROM information_schema.columns
-        WHERE table_schema = 'academico' AND table_name = 'historico'
+        WHERE table_schema = 'academico' AND table_name = 'tb_historico'
           AND column_name = 'media_final') = 'ALWAYS' THEN
-        RAISE NOTICE '[OK]    historico.media_final e coluna gerada';
+        RAISE NOTICE '[OK]    tb_historico.media_final e coluna gerada';
     ELSE
-        falhas := falhas || 'historico.media_final nao e coluna gerada'::text;
+        falhas := falhas || 'tb_historico.media_final nao e coluna gerada'::text;
     END IF;
 
     -- 7. Minimos exigidos pelo enunciado do Marco 1.
-    SELECT count(*) INTO n_aluno     FROM aluno;
-    SELECT count(*) INTO n_turma     FROM turma;
-    SELECT count(*) INTO n_matricula FROM matricula;
-    SELECT count(*) INTO n_historico FROM historico;
+    SELECT count(*) INTO n_aluno     FROM tb_aluno;
+    SELECT count(*) INTO n_turma     FROM tb_turma;
+    SELECT count(*) INTO n_matricula FROM tb_matricula;
+    SELECT count(*) INTO n_historico FROM tb_historico;
 
     IF n_aluno >= 100 THEN
         RAISE NOTICE '[OK]    alunos: % (minimo 100)', n_aluno;
@@ -195,11 +195,11 @@ BEGIN
     -- 9. Pelo menos uma turma sem matriculas ativas, para a consulta 04 ter um
     -- caso real de juncao externa.
     SELECT count(*) INTO n_vazias FROM (
-        SELECT t.id
-        FROM turma t
-        LEFT JOIN matricula m ON m.turma_id = t.id AND m.status = 'MATRICULADO'
-        GROUP BY t.id
-        HAVING count(m.id) = 0) x;
+        SELECT t.id_turma
+        FROM tb_turma t
+        LEFT JOIN tb_matricula m ON m.id_turma = t.id_turma AND m.status = 'MATRICULADO'
+        GROUP BY t.id_turma
+        HAVING count(m.id_matricula) = 0) x;
     IF n_vazias >= 1 THEN
         RAISE NOTICE '[OK]    % turma(s) sem matriculas: a consulta 04 tem caso real de LEFT JOIN', n_vazias;
     ELSE
