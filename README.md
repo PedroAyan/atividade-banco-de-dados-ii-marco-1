@@ -27,6 +27,16 @@ automática por gatilho nem controle de disputa pela última vaga.
 - Docker Compose
 - PostgreSQL 17 — fornecido pelo contêiner, não é necessário instalar localmente
 
+## Ferramentas e ambiente da disciplina
+
+O professor exige draw.io para a modelagem, pgAdmin 4 para a administração do
+banco e PostgreSQL 16 no pacote Docker fornecido pela disciplina (Google
+Classroom). Detalhes em [docs/ambiente-e-ferramentas.md](docs/ambiente-e-ferramentas.md).
+
+As instruções de execução abaixo, com `docker-compose.yml` (imagem
+`postgres:17`) e `psql`, descrevem o ambiente de testes da equipe e não
+substituem a validação oficial no ambiente da disciplina.
+
 ## Estrutura do repositório
 
 ```
@@ -35,6 +45,8 @@ AUTORES.md
 diagramabancodedadosii.drawio
 diagramabancodedadosii.drawio.pdf
 docker-compose.yml
+docs/
+  ambiente-e-ferramentas.md
 sql/
   01-create-tables.sql
   02-insert-data.sql
