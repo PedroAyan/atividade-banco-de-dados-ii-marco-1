@@ -32,35 +32,35 @@ CREATE TYPE timerange AS RANGE (subtype = time);
 -- ---------------------------------------------------------------------
 -- 2. ESTRUTURA INSTITUCIONAL
 -- ---------------------------------------------------------------------
-CREATE TABLE campus (
-    id      smallint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE tb_campus (
+    id_campus smallint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome    varchar(60) NOT NULL UNIQUE,
     cidade  varchar(60) NOT NULL
 );
 
-CREATE TABLE curso (
-    id         smallint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE tb_curso (
+    id_curso smallint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     codigo     varchar(10) NOT NULL UNIQUE,
     nome       varchar(120) NOT NULL,
     grau       varchar(20) NOT NULL
                CHECK (grau IN ('BACHARELADO','LICENCIATURA','TECNOLOGO')),
     ch_total   integer NOT NULL CHECK (ch_total > 0),
-    campus_id  smallint NOT NULL REFERENCES campus ON DELETE RESTRICT
+    id_campus  smallint NOT NULL REFERENCES tb_campus (id_campus) ON DELETE RESTRICT
 );
 
-CREATE TABLE curriculo (
-    id            integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    curso_id      smallint NOT NULL REFERENCES curso ON DELETE CASCADE,
+CREATE TABLE tb_curriculo (
+    id_curriculo integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_curso      smallint NOT NULL REFERENCES tb_curso (id_curso) ON DELETE CASCADE,
     ano_vigencia  smallint NOT NULL CHECK (ano_vigencia BETWEEN 2000 AND 2100),
     ativo         boolean  NOT NULL DEFAULT false,
-    UNIQUE (curso_id, ano_vigencia)
+    UNIQUE (id_curso, ano_vigencia)
 );
 -- regra: no máximo um currículo ativo por curso (índice único parcial)
 CREATE UNIQUE INDEX uq_curriculo_ativo
-    ON curriculo (curso_id) WHERE ativo;
+    ON tb_curriculo (id_curso) WHERE ativo;
 
-CREATE TABLE disciplina (
-    id           integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE tb_disciplina (
+    id_disciplina integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     codigo       varchar(10) NOT NULL UNIQUE,
     nome         varchar(120) NOT NULL,
     ch_teorica   smallint NOT NULL CHECK (ch_teorica >= 0),
@@ -70,26 +70,26 @@ CREATE TABLE disciplina (
     CHECK (ch_teorica + ch_pratica > 0)
 );
 
-CREATE TABLE curriculo_disciplina (
-    curriculo_id  integer NOT NULL REFERENCES curriculo ON DELETE CASCADE,
-    disciplina_id integer NOT NULL REFERENCES disciplina ON DELETE RESTRICT,
+CREATE TABLE tb_curriculo_disciplina (
+    id_curriculo  integer NOT NULL REFERENCES tb_curriculo (id_curriculo) ON DELETE CASCADE,
+    id_disciplina integer NOT NULL REFERENCES tb_disciplina (id_disciplina) ON DELETE RESTRICT,
     periodo       smallint NOT NULL CHECK (periodo BETWEEN 1 AND 12),
     tipo          tipo_disc_t NOT NULL DEFAULT 'OBRIGATORIA',
-    PRIMARY KEY (curriculo_id, disciplina_id)
+    PRIMARY KEY (id_curriculo, id_disciplina)
 );
 
 -- Associação entre duas disciplinas, usada nas consultas recursivas.
 -- O CHECK abaixo impede autorreferência direta; não detecta ciclos indiretos.
-CREATE TABLE pre_requisito (
-    disciplina_id integer NOT NULL REFERENCES disciplina ON DELETE CASCADE,
-    requisito_id  integer NOT NULL REFERENCES disciplina ON DELETE RESTRICT,
+CREATE TABLE tb_pre_requisito (
+    id_disciplina integer NOT NULL REFERENCES tb_disciplina (id_disciplina) ON DELETE CASCADE,
+    id_requisito  integer NOT NULL REFERENCES tb_disciplina (id_disciplina) ON DELETE RESTRICT,
     vinculo       vinculo_t NOT NULL DEFAULT 'PRE_REQUISITO',
-    PRIMARY KEY (disciplina_id, requisito_id),
-    CHECK (disciplina_id <> requisito_id)
+    PRIMARY KEY (id_disciplina, id_requisito),
+    CHECK (id_disciplina <> id_requisito)
 );
 
-CREATE TABLE professor (
-    id         integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE tb_professor (
+    id_professor integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     matricula  varchar(12) NOT NULL UNIQUE,
     nome       varchar(120) NOT NULL,
     email      varchar(120) NOT NULL UNIQUE
@@ -98,20 +98,20 @@ CREATE TABLE professor (
                CHECK (titulacao IN ('ESPECIALISTA','MESTRE','DOUTOR'))
 );
 
-CREATE TABLE sala (
-    id          integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    campus_id   smallint NOT NULL REFERENCES campus ON DELETE RESTRICT,
+CREATE TABLE tb_sala (
+    id_sala   integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_campus   smallint NOT NULL REFERENCES tb_campus (id_campus) ON DELETE RESTRICT,
     codigo      varchar(10) NOT NULL,
     capacidade  smallint NOT NULL CHECK (capacidade > 0),
     tipo        tipo_sala_t NOT NULL DEFAULT 'TEORICA',
-    UNIQUE (campus_id, codigo)
+    UNIQUE (id_campus, codigo)
 );
 
 -- ---------------------------------------------------------------------
 -- 3. OFERTA
 -- ---------------------------------------------------------------------
-CREATE TABLE periodo_letivo (
-    id           smallint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE tb_periodo_letivo (
+    id_periodo_letivo smallint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     ano          smallint NOT NULL,
     semestre     smallint NOT NULL CHECK (semestre IN (1,2)),
     data_inicio  date NOT NULL,
@@ -120,29 +120,29 @@ CREATE TABLE periodo_letivo (
     CHECK (data_fim > data_inicio)
 );
 
-CREATE TABLE feriado (
-    id         integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE tb_feriado (
+    id_feriado integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     data       date NOT NULL,
     descricao  varchar(120) NOT NULL,
-    campus_id  smallint REFERENCES campus ON DELETE CASCADE,  -- NULL = todos
-    UNIQUE (data, campus_id)
+    id_campus  smallint REFERENCES tb_campus (id_campus) ON DELETE CASCADE,  -- NULL = todos
+    UNIQUE (data, id_campus)
 );
 
-CREATE TABLE turma (
-    id                 integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE tb_turma (
+    id_turma         integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     codigo             varchar(15) NOT NULL,
-    disciplina_id      integer  NOT NULL REFERENCES disciplina ON DELETE RESTRICT,
-    periodo_letivo_id  smallint NOT NULL REFERENCES periodo_letivo ON DELETE RESTRICT,
-    professor_id       integer  REFERENCES professor ON DELETE SET NULL,
+    id_disciplina      integer  NOT NULL REFERENCES tb_disciplina (id_disciplina) ON DELETE RESTRICT,
+    id_periodo_letivo  smallint NOT NULL REFERENCES tb_periodo_letivo (id_periodo_letivo) ON DELETE RESTRICT,
+    id_professor       integer  REFERENCES tb_professor (id_professor) ON DELETE SET NULL,
     turno              turno_t  NOT NULL,
     vagas              smallint NOT NULL CHECK (vagas > 0),
-    UNIQUE (codigo, periodo_letivo_id, disciplina_id)
+    UNIQUE (codigo, id_periodo_letivo, id_disciplina)
 );
 
-CREATE TABLE turma_horario (
-    id          integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    turma_id    integer NOT NULL REFERENCES turma ON DELETE CASCADE,
-    sala_id     integer NOT NULL REFERENCES sala ON DELETE RESTRICT,
+CREATE TABLE tb_turma_horario (
+    id_turma_horario integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_turma    integer NOT NULL REFERENCES tb_turma (id_turma) ON DELETE CASCADE,
+    id_sala     integer NOT NULL REFERENCES tb_sala (id_sala) ON DELETE RESTRICT,
     dia_semana  smallint NOT NULL CHECK (dia_semana BETWEEN 1 AND 7), -- 1=domingo
     faixa       timerange NOT NULL,
     CHECK (NOT isempty(faixa))
@@ -152,38 +152,38 @@ CREATE TABLE turma_horario (
 -- Atenção: o escopo é global, sem distinguir períodos letivos.
 -- Reutilizar a mesma sala/horário em semestres diferentes exige rever esta regra.
 -- Uma sala não pode receber duas turmas no mesmo dia e horário
-ALTER TABLE turma_horario
+ALTER TABLE tb_turma_horario
     ADD CONSTRAINT ex_sala_ocupada
-    EXCLUDE USING gist (sala_id WITH =, dia_semana WITH =, faixa WITH &&);
+    EXCLUDE USING gist (id_sala WITH =, dia_semana WITH =, faixa WITH &&);
 
 -- ---------------------------------------------------------------------
 -- 4. VIDA ACADÊMICA
 -- ---------------------------------------------------------------------
-CREATE TABLE aluno (
-    id            integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+CREATE TABLE tb_aluno (
+    id_aluno    integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     matricula     varchar(12) NOT NULL UNIQUE,
     nome          varchar(120) NOT NULL,
     cpf           char(11) NOT NULL UNIQUE CHECK (cpf ~ '^[0-9]{11}$'),
     email         varchar(120) NOT NULL UNIQUE,
     nascimento    date NOT NULL CHECK (nascimento < CURRENT_DATE),
-    curso_id      smallint NOT NULL REFERENCES curso ON DELETE RESTRICT,
-    curriculo_id  integer  NOT NULL REFERENCES curriculo ON DELETE RESTRICT,
+    id_curso      smallint NOT NULL REFERENCES tb_curso (id_curso) ON DELETE RESTRICT,
+    id_curriculo  integer  NOT NULL REFERENCES tb_curriculo (id_curriculo) ON DELETE RESTRICT,
     ingresso      date NOT NULL,
     ativo         boolean NOT NULL DEFAULT true
 );
 
-CREATE TABLE matricula (
-    id              integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    aluno_id        integer NOT NULL REFERENCES aluno  ON DELETE CASCADE,
-    turma_id        integer NOT NULL REFERENCES turma  ON DELETE RESTRICT,
+CREATE TABLE tb_matricula (
+    id_matricula  integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_aluno        integer NOT NULL REFERENCES tb_aluno (id_aluno) ON DELETE CASCADE,
+    id_turma        integer NOT NULL REFERENCES tb_turma (id_turma) ON DELETE RESTRICT,
     data_matricula  timestamptz NOT NULL DEFAULT now(),
     status          status_mat_t NOT NULL DEFAULT 'MATRICULADO',
-    UNIQUE (aluno_id, turma_id)
+    UNIQUE (id_aluno, id_turma)
 );
 
-CREATE TABLE historico (
-    id            integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    matricula_id  integer NOT NULL UNIQUE REFERENCES matricula ON DELETE CASCADE,
+CREATE TABLE tb_historico (
+    id_historico integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_matricula  integer NOT NULL UNIQUE REFERENCES tb_matricula (id_matricula) ON DELETE CASCADE,
     nota_a1       nota_t,
     nota_a2       nota_t,
     nota_p3       nota_t,
@@ -201,11 +201,11 @@ CREATE TABLE historico (
     ) STORED
 );
 
--- Auditoria: matricula_id não tem FK no modelo fornecido.
+-- Auditoria: id_matricula não tem FK no modelo fornecido.
 -- A criação desta tabela não gera registros de auditoria automaticamente.
-CREATE TABLE log_matricula (
-    id            bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    matricula_id  integer NOT NULL,
+CREATE TABLE tb_log_matricula (
+    id_log_matricula bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id_matricula  integer NOT NULL,
     acao          varchar(20) NOT NULL,
     ocorrido_em   timestamptz NOT NULL DEFAULT now(),
     usuario       name NOT NULL DEFAULT CURRENT_USER,
