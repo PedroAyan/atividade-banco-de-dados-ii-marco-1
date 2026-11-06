@@ -1,0 +1,14 @@
+{
+  "catalogos_comparados": [
+    "indices",
+    "policies",
+    "views",
+    "functions",
+    "acl",
+    "column_grants",
+    "memberships",
+    "sequences"
+  ],
+  "historicos_proprios": 3,
+  "historicos_alheios": 0
+}

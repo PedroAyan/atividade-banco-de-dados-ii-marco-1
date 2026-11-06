@@ -1,0 +1,24 @@
+{
+  "restaurado": true,
+  "tabelas": 17,
+  "version": "17.11 (Debian 17.11-1.pgdg13+2)",
+  "assinaturas": {
+    "identidade_aluno": "1:668a575031f4d3f5150b9d011bf80e94",
+    "tb_aluno": "120:5a2f7258082a0a3da7d9e122becd120c",
+    "tb_campus": "2:d71b14ec29127bc90288047c69ddc824",
+    "tb_curriculo": "4:5fa26f82047f4f15075d42098dc487b7",
+    "tb_curriculo_disciplina": "28:292f385d193c24951a2f0e9926ccd26b",
+    "tb_curso": "3:2cad8125ec1e0c0c8361d2b23fcbde34",
+    "tb_disciplina": "7:4beb3004cc775959f4f251cbe4a3a811",
+    "tb_feriado": "6:b1a78899dca1506878a7715a02f02a85",
+    "tb_historico": "360:806766c7f44d42c6c467feb147cc212e",
+    "tb_log_matricula": "360:b6760a65dd995ba0d3d6c6fb0b8bc314",
+    "tb_matricula": "360:7092c4b8fa3de7e6348d173212093452",
+    "tb_periodo_letivo": "3:741f1fe0bd3f92c92c622856aa163323",
+    "tb_pre_requisito": "5:0a1357d2cfb3c525553976916f63ac4d",
+    "tb_professor": "3:7a1844cfb2b3d48cc2862d043a629673",
+    "tb_sala": "6:6d50d58a4c91db5aa751cb50c9dd1b91",
+    "tb_turma": "10:f228d1fe57b640bbc3b424bd065c574a",
+    "tb_turma_horario": "6:0f4291c8307dfd75699b3c807a1f2874"
+  }
+}
