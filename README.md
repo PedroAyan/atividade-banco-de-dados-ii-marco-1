@@ -45,7 +45,7 @@ Para instalação sem testes, execute no Query Tool do pgAdmin como administrado
 7. `sql/07-seguranca.sql` — perfis, GRANT/REVOKE e RLS; exige nomes de papéis livres no cluster.
 8. `sql/98-validacao-marco2.sql` — verificações de leitura como administrador sobre a carga didática.
 
-Os SQL 98/99 são verificações, não migrações. As funções não substituem todas as regras acadêmicas futuras (por exemplo elegibilidade por pré-requisito); seu escopo é a disputa da vaga e criação atômica de matrícula/histórico. No acesso operacional, a secretaria usa somente a solução com bloqueio. SERIALIZABLE é uma alternativa demonstrada separadamente; não misturar protocolos de escrita.
+Os SQL 98/99 são verificações, não migrações. O 99 confere as 16 tabelas e 18 FKs originais e permite a tabela adicional `identidade_aluno` do Marco 2; também funciona antes dessa extensão. O validador Python repete as dez consultas e o 99 após instalar a segurança. As funções não substituem todas as regras acadêmicas futuras (por exemplo elegibilidade por pré-requisito); seu escopo é a disputa da vaga e criação atômica de matrícula/histórico. No acesso operacional, a secretaria usa somente a solução com bloqueio. SERIALIZABLE é uma alternativa demonstrada separadamente; não misturar protocolos de escrita.
 
 ## Evidências e demonstração
 

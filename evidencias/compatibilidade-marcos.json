@@ -1,0 +1,31 @@
+{
+  "marcos_integrados": {
+    "scripts_aprovados": [
+      "03-consultas.sql",
+      "99-validacao.sql",
+      "98-validacao-marco2.sql"
+    ],
+    "contagens": [
+      120,
+      10,
+      360,
+      360
+    ]
+  },
+  "marco1_isolado": {
+    "scripts_aprovados": [
+      "01-create-tables.sql",
+      "02-insert-data.sql",
+      "03-consultas.sql",
+      "99-validacao.sql"
+    ],
+    "contagens": [
+      120,
+      10,
+      360,
+      360
+    ]
+  },
+  "tabela_inesperada_rejeitada": true,
+  "version": "PostgreSQL 17.11; clusters de ensaio isolados"
+}

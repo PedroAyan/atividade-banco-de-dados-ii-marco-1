@@ -1,5 +1,7 @@
 -- Marco 1 — Validação da entrega. PostgreSQL 17.
 -- Executar DEPOIS de 01-create-tables.sql e 02-insert-data.sql.
+-- Compativel com o Marco 2: aceita apenas a tabela adicional identidade_aluno;
+-- as 16 tabelas e os 18 relacionamentos originais continuam obrigatorios.
 -- Este arquivo NÃO faz parte da criação do banco: 01, 02 e 03 continuam sendo
 -- a ordem normal de execução. Aqui apenas se confere o que já foi entregue.
 --
@@ -70,10 +72,11 @@ BEGIN
 
     SELECT string_agg(tablename, ', ' ORDER BY tablename) INTO excedentes
     FROM pg_tables
-    WHERE schemaname = 'academico' AND tablename <> ALL (tabelas_esperadas);
+    WHERE schemaname = 'academico' AND tablename <> ALL (tabelas_esperadas)
+      AND tablename <> 'identidade_aluno';
 
     IF ausentes IS NULL AND excedentes IS NULL THEN
-        RAISE NOTICE '[OK]    16 tabelas do modelo presentes, nenhuma a mais';
+        RAISE NOTICE '[OK]    16 tabelas do modelo presentes; extensao identidade_aluno permitida';
     ELSE
         IF ausentes IS NOT NULL THEN
             falhas := falhas || format('tabelas ausentes: %s', ausentes);
@@ -114,10 +117,13 @@ BEGIN
         JOIN pg_namespace ns ON ns.oid = c.connamespace
         WHERE ns.nspname = 'academico' AND c.contype = 'f');
 
+    -- Contar as FKs do modelo original, sem a FK do vinculo de identidade do Marco 2.
     SELECT count(*) INTO n
     FROM pg_constraint c
     JOIN pg_namespace ns ON ns.oid = c.connamespace
-    WHERE ns.nspname = 'academico' AND c.contype = 'f';
+    JOIN pg_class origem ON origem.oid = c.conrelid
+    WHERE ns.nspname = 'academico' AND c.contype = 'f'
+      AND origem.relname = ANY (tabelas_esperadas);
 
     IF ausentes IS NULL AND n = 18 THEN
         RAISE NOTICE '[OK]    18 relacionamentos (FK) do modelo presentes';

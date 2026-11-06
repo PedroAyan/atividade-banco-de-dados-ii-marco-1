@@ -78,6 +78,8 @@ if __name__=='__main__':
      try:probe.execute(statement);assert allowed
      except psycopg.errors.InsufficientPrivilege:assert not allowed
      finally:probe.rollback()
+   execute_file(c,'sql/03-consultas.sql')
+   execute_file(c,'sql/99-validacao.sql')
    execute_file(c,'sql/98-validacao-marco2.sql')
    save('seguranca.json',{'proprios':own,'outro':other,'negados':denied,'administrativos':360,'variavel_nao_falsifica_identidade':True,'secretaria_sem_escrita_direta':True,'coordenacao_atualiza_notas':True})
  print('OK',a.etapa)
