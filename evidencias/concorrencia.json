@@ -4,18 +4,42 @@
       "commit",
       "commit"
     ],
+    "leituras_antes_da_barreira": [
+      {
+        "aluno": 1,
+        "ocupadas_lidas": 0,
+        "capacidade_lida": 1
+      },
+      {
+        "aluno": 2,
+        "ocupadas_lidas": 0,
+        "capacidade_lida": 1
+      }
+    ],
     "ocupadas": 2,
     "capacidade": 1,
-    "seconds": 0.018314999993890524
+    "seconds": 0.016640899993944913
   },
   "bloqueio": {
     "outcomes": [
       "commit",
       "P0001"
     ],
+    "leituras_antes_da_barreira": [
+      {
+        "aluno": 1,
+        "ocupadas_lidas": 0,
+        "capacidade_lida": 1
+      },
+      {
+        "aluno": 2,
+        "ocupadas_lidas": 0,
+        "capacidade_lida": 1
+      }
+    ],
     "ocupadas": 1,
     "capacidade": 1,
-    "seconds": 0.018487200024537742
+    "seconds": 0.01872300001559779
   },
   "serializavel": {
     "outcomes": [
@@ -23,8 +47,20 @@
       "commit",
       "retry P0001"
     ],
+    "leituras_antes_da_barreira": [
+      {
+        "aluno": 1,
+        "ocupadas_lidas": 0,
+        "capacidade_lida": 1
+      },
+      {
+        "aluno": 2,
+        "ocupadas_lidas": 0,
+        "capacidade_lida": 1
+      }
+    ],
     "ocupadas": 1,
     "capacidade": 1,
-    "seconds": 0.03583740000613034
+    "seconds": 0.018878100032452494
   }
 }

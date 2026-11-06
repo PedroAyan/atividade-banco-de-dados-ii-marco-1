@@ -6,5 +6,8 @@
     "update academico.tb_historico set nota_a1_historico=10",
     "select academico.matricular_bloqueio(2,1)"
   ],
-  "administrativos": 360
+  "administrativos": 360,
+  "variavel_nao_falsifica_identidade": true,
+  "secretaria_sem_escrita_direta": true,
+  "coordenacao_atualiza_notas": true
 }

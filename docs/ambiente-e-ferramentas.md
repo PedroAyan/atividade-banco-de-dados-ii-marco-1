@@ -11,7 +11,7 @@ não substitui o guia de instalação oficial.
 |---|---|
 | Modelagem do banco de dados | **draw.io**, exclusivamente |
 | Administração do banco e execução de SQL | **pgAdmin 4**, exclusivamente |
-| Banco de dados | **PostgreSQL 16**, em Docker |
+| Banco de dados | **A confirmar no pacote oficial** (registros locais divergem entre 16 e 17), em Docker |
 | Ambiente | **Docker** e o pacote Docker fornecido pela disciplina |
 
 Regras que decorrem do comunicado:
@@ -32,15 +32,14 @@ da disciplina. O pacote já inclui o banco de dados usado no curso.
 Este repositório **não** reproduz o conteúdo desse pacote nem do guia. Portanto,
 as credenciais, a porta, o nome do banco e os comandos de inicialização **não
 estão documentados aqui** e devem ser obtidos no guia oficial. Siga o guia do
-professor para iniciar o ambiente e confirmar que o servidor em execução é o
-PostgreSQL 16.
+professor para iniciar o ambiente e confirmar a versão real com `SHOW server_version` e a imagem Compose do pacote.
 
 Não crie um banco de dados à parte e não altere a configuração Docker fornecida.
 Não apague volumes do Docker nem os dados do banco do curso.
 
 > O arquivo `docker-compose.yml` deste repositório é a configuração usada nos
 > testes da própria equipe (imagem `postgres:17`). **Não é o pacote oficial** da
-> disciplina e não satisfaz a exigência de PostgreSQL 16.
+> disciplina; compatibilidade técnica não comprova conformidade oficial.
 
 ## Execução dos scripts SQL (pgAdmin 4)
 
@@ -97,7 +96,7 @@ PDF `diagramabancodedadosii.drawio.pdf` é apenas a sua exportação.
 - Os scripts SQL já usam as convenções acima. Os testes feitos até aqui rodaram em
   PostgreSQL 17, em contêiner temporário e com o cliente `psql`. Isso é apenas
   histórico de testes e **não** substitui a validação oficial.
-- A validação oficial — PostgreSQL 16 do pacote da disciplina, pgAdmin 4 e Query
+- A validação oficial — versão a confirmar no pacote da disciplina, pgAdmin 4 e Query
   Tool — **ainda não foi realizada**.
 - O arquivo `diagramabancodedadosii.drawio` foi gerado e atualizado por script, e
   não dentro do draw.io. Deve ser aberto no draw.io, inspecionado visualmente e
@@ -105,3 +104,7 @@ PDF `diagramabancodedadosii.drawio.pdf` é apenas a sua exportação.
 - O PDF do diagrama está **desatualizado** (nomes e rótulos antigos) e precisa ser
   exportado do draw.io.
 - Dependência: o pacote Docker e o guia oficial do Google Classroom.
+
+## Confirmação pendente da versão (Marco 2)
+
+O enunciado local indica PostgreSQL 17; a anotação anterior deste guia dizia 16. Não foi localizado o pacote Docker efetivamente fornecido pela disciplina nos arquivos disponíveis. Nenhuma dessas anotações substitui esse pacote. Os testes novos foram feitos em PostgreSQL 17.11 isolado e não são validação oficial. Para encerrar a divergência, registrar a tag/digest da imagem oficial, `SHOW server_version`, data e origem do pacote, e repetir a demonstração no pgAdmin. A ordem atualizada dos SQL 04–07 e 98 está no README.

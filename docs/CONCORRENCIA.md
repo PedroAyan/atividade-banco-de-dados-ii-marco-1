@@ -11,3 +11,5 @@ O bloqueio causa espera previsível por turma; SERIALIZABLE usa rastreamento de 
 Produção: toda entrada de matrícula deve passar pela função, ou aderir ao mesmo protocolo. Os perfis do script 07 não têm INSERT direto nem permissão de reativar cancelamentos. O proprietário e superusuários são administradores de confiança e conseguem contornar essa proteção. Mudanças futuras de capacidade ou reativação precisam usar o mesmo bloqueio e validar lotação.
 
 Exemplo secretaria: BEGIN ISOLATION LEVEL READ COMMITTED; SELECT academico.matricular_bloqueio(1,9); COMMIT;. Para a alternativa, BEGIN ISOLATION LEVEL SERIALIZABLE e matricular_serializavel. Ao receber qualquer erro execute ROLLBACK.
+
+As estrategias sao alternativas: o perfil secretaria recebe somente a funcao de bloqueio. A demonstracao SERIALIZABLE roda como administrador isolado. Para adotar SERIALIZABLE operacionalmente, todos os escritores participantes precisam usar esse isolamento, revogando a rota READ COMMITTED. Nao misturar os dois protocolos.

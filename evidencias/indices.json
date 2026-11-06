@@ -20,8 +20,8 @@
             "Total Cost": 8.4,
             "Plan Rows": 60,
             "Plan Width": 24,
-            "Actual Startup Time": 0.005,
-            "Actual Total Time": 0.023,
+            "Actual Startup Time": 0.006,
+            "Actual Total Time": 0.024,
             "Actual Rows": 60,
             "Actual Loops": 1,
             "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
@@ -38,7 +38,7 @@
             "Temp Written Blocks": 0
           },
           "Planning": {
-            "Shared Hit Blocks": 29,
+            "Shared Hit Blocks": 43,
             "Shared Read Blocks": 0,
             "Shared Dirtied Blocks": 0,
             "Shared Written Blocks": 0,
@@ -49,7 +49,7 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.073,
+          "Planning Time": 0.094,
           "Triggers": [],
           "Execution Time": 0.03
         }
@@ -66,8 +66,8 @@
             "Total Cost": 8.4,
             "Plan Rows": 60,
             "Plan Width": 24,
-            "Actual Startup Time": 0.005,
-            "Actual Total Time": 0.022,
+            "Actual Startup Time": 0.007,
+            "Actual Total Time": 0.036,
             "Actual Rows": 60,
             "Actual Loops": 1,
             "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
@@ -95,7 +95,53 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.026,
+          "Planning Time": 0.032,
+          "Triggers": [],
+          "Execution Time": 0.044
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_matricula",
+            "Alias": "tb_matricula",
+            "Startup Cost": 0.0,
+            "Total Cost": 8.4,
+            "Plan Rows": 60,
+            "Plan Width": 24,
+            "Actual Startup Time": 0.005,
+            "Actual Total Time": 0.023,
+            "Actual Rows": 60,
+            "Actual Loops": 1,
+            "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
+            "Rows Removed by Filter": 300,
+            "Shared Hit Blocks": 3,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.025,
           "Triggers": [],
           "Execution Time": 0.028
         }
@@ -113,7 +159,7 @@
             "Plan Rows": 60,
             "Plan Width": 24,
             "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.019,
+            "Actual Total Time": 0.02,
             "Actual Rows": 60,
             "Actual Loops": 1,
             "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
@@ -158,8 +204,8 @@
             "Total Cost": 8.4,
             "Plan Rows": 60,
             "Plan Width": 24,
-            "Actual Startup Time": 0.005,
-            "Actual Total Time": 0.022,
+            "Actual Startup Time": 0.004,
+            "Actual Total Time": 0.02,
             "Actual Rows": 60,
             "Actual Loops": 1,
             "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
@@ -187,7 +233,53 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.025,
+          "Planning Time": 0.022,
+          "Triggers": [],
+          "Execution Time": 0.026
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_matricula",
+            "Alias": "tb_matricula",
+            "Startup Cost": 0.0,
+            "Total Cost": 8.4,
+            "Plan Rows": 60,
+            "Plan Width": 24,
+            "Actual Startup Time": 0.005,
+            "Actual Total Time": 0.02,
+            "Actual Rows": 60,
+            "Actual Loops": 1,
+            "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
+            "Rows Removed by Filter": 300,
+            "Shared Hit Blocks": 3,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.031,
           "Triggers": [],
           "Execution Time": 0.028
         }
@@ -237,98 +329,6 @@
           "Triggers": [],
           "Execution Time": 0.027
         }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_matricula",
-            "Alias": "tb_matricula",
-            "Startup Cost": 0.0,
-            "Total Cost": 8.4,
-            "Plan Rows": 60,
-            "Plan Width": 24,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.022,
-            "Actual Rows": 60,
-            "Actual Loops": 1,
-            "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
-            "Rows Removed by Filter": 300,
-            "Shared Hit Blocks": 3,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.024,
-          "Triggers": [],
-          "Execution Time": 0.027
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_matricula",
-            "Alias": "tb_matricula",
-            "Startup Cost": 0.0,
-            "Total Cost": 8.4,
-            "Plan Rows": 60,
-            "Plan Width": 24,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.02,
-            "Actual Rows": 60,
-            "Actual Loops": 1,
-            "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
-            "Rows Removed by Filter": 300,
-            "Shared Hit Blocks": 3,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.025,
-          "Triggers": [],
-          "Execution Time": 0.027
-        }
       ]
     ],
     [
@@ -344,7 +344,7 @@
             "Total Cost": 1.12,
             "Plan Rows": 2,
             "Plan Width": 28,
-            "Actual Startup Time": 0.004,
+            "Actual Startup Time": 0.003,
             "Actual Total Time": 0.004,
             "Actual Rows": 2,
             "Actual Loops": 1,
@@ -373,7 +373,7 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.087,
+          "Planning Time": 0.083,
           "Triggers": [],
           "Execution Time": 0.009
         }
@@ -419,7 +419,7 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.022,
+          "Planning Time": 0.026,
           "Triggers": [],
           "Execution Time": 0.009
         }
@@ -437,53 +437,7 @@
             "Plan Rows": 2,
             "Plan Width": 28,
             "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.006,
-            "Actual Rows": 2,
-            "Actual Loops": 1,
-            "Filter": "(id_periodo_letivo = 1)",
-            "Rows Removed by Filter": 8,
-            "Shared Hit Blocks": 1,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.028,
-          "Triggers": [],
-          "Execution Time": 0.011
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_turma",
-            "Alias": "tb_turma",
-            "Startup Cost": 0.0,
-            "Total Cost": 1.12,
-            "Plan Rows": 2,
-            "Plan Width": 28,
-            "Actual Startup Time": 0.005,
-            "Actual Total Time": 0.006,
+            "Actual Total Time": 0.005,
             "Actual Rows": 2,
             "Actual Loops": 1,
             "Filter": "(id_periodo_letivo = 1)",
@@ -513,7 +467,7 @@
           },
           "Planning Time": 0.062,
           "Triggers": [],
-          "Execution Time": 0.012
+          "Execution Time": 0.009
         }
       ],
       [
@@ -557,7 +511,7 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.022,
+          "Planning Time": 0.02,
           "Triggers": [],
           "Execution Time": 0.008
         }
@@ -574,8 +528,54 @@
             "Total Cost": 1.12,
             "Plan Rows": 2,
             "Plan Width": 28,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.005,
+            "Actual Startup Time": 0.003,
+            "Actual Total Time": 0.004,
+            "Actual Rows": 2,
+            "Actual Loops": 1,
+            "Filter": "(id_periodo_letivo = 1)",
+            "Rows Removed by Filter": 8,
+            "Shared Hit Blocks": 1,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.021,
+          "Triggers": [],
+          "Execution Time": 0.008
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_turma",
+            "Alias": "tb_turma",
+            "Startup Cost": 0.0,
+            "Total Cost": 1.12,
+            "Plan Rows": 2,
+            "Plan Width": 28,
+            "Actual Startup Time": 0.003,
+            "Actual Total Time": 0.004,
             "Actual Rows": 2,
             "Actual Loops": 1,
             "Filter": "(id_periodo_letivo = 1)",
@@ -605,7 +605,7 @@
           },
           "Planning Time": 0.026,
           "Triggers": [],
-          "Execution Time": 0.01
+          "Execution Time": 0.009
         }
       ],
       [
@@ -620,8 +620,8 @@
             "Total Cost": 1.12,
             "Plan Rows": 2,
             "Plan Width": 28,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.005,
+            "Actual Startup Time": 0.003,
+            "Actual Total Time": 0.004,
             "Actual Rows": 2,
             "Actual Loops": 1,
             "Filter": "(id_periodo_letivo = 1)",
@@ -649,9 +649,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.028,
+          "Planning Time": 0.021,
           "Triggers": [],
-          "Execution Time": 0.011
+          "Execution Time": 0.008
         }
       ]
     ],
@@ -686,7 +686,7 @@
             "Temp Written Blocks": 0
           },
           "Planning": {
-            "Shared Hit Blocks": 56,
+            "Shared Hit Blocks": 62,
             "Shared Read Blocks": 0,
             "Shared Dirtied Blocks": 0,
             "Shared Written Blocks": 0,
@@ -697,9 +697,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.073,
+          "Planning Time": 0.152,
           "Triggers": [],
-          "Execution Time": 0.02
+          "Execution Time": 0.019
         }
       ],
       [
@@ -714,8 +714,8 @@
             "Total Cost": 3.5,
             "Plan Rows": 60,
             "Plan Width": 70,
-            "Actual Startup Time": 0.005,
-            "Actual Total Time": 0.018,
+            "Actual Startup Time": 0.004,
+            "Actual Total Time": 0.011,
             "Actual Rows": 60,
             "Actual Loops": 1,
             "Filter": "(id_curso = 1)",
@@ -743,55 +743,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.029,
+          "Planning Time": 0.026,
           "Triggers": [],
-          "Execution Time": 0.027
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_aluno",
-            "Alias": "tb_aluno",
-            "Startup Cost": 0.0,
-            "Total Cost": 3.5,
-            "Plan Rows": 60,
-            "Plan Width": 70,
-            "Actual Startup Time": 0.005,
-            "Actual Total Time": 0.017,
-            "Actual Rows": 60,
-            "Actual Loops": 1,
-            "Filter": "(id_curso = 1)",
-            "Rows Removed by Filter": 60,
-            "Shared Hit Blocks": 2,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.027,
-          "Triggers": [],
-          "Execution Time": 0.025
+          "Execution Time": 0.018
         }
       ],
       [
@@ -881,53 +835,7 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.02,
-          "Triggers": [],
-          "Execution Time": 0.017
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_aluno",
-            "Alias": "tb_aluno",
-            "Startup Cost": 0.0,
-            "Total Cost": 3.5,
-            "Plan Rows": 60,
-            "Plan Width": 70,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.011,
-            "Actual Rows": 60,
-            "Actual Loops": 1,
-            "Filter": "(id_curso = 1)",
-            "Rows Removed by Filter": 60,
-            "Shared Hit Blocks": 2,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.022,
+          "Planning Time": 0.024,
           "Triggers": [],
           "Execution Time": 0.018
         }
@@ -973,7 +881,99 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.022,
+          "Planning Time": 0.021,
+          "Triggers": [],
+          "Execution Time": 0.017
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_aluno",
+            "Alias": "tb_aluno",
+            "Startup Cost": 0.0,
+            "Total Cost": 3.5,
+            "Plan Rows": 60,
+            "Plan Width": 70,
+            "Actual Startup Time": 0.005,
+            "Actual Total Time": 0.014,
+            "Actual Rows": 60,
+            "Actual Loops": 1,
+            "Filter": "(id_curso = 1)",
+            "Rows Removed by Filter": 60,
+            "Shared Hit Blocks": 2,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.036,
+          "Triggers": [],
+          "Execution Time": 0.022
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_aluno",
+            "Alias": "tb_aluno",
+            "Startup Cost": 0.0,
+            "Total Cost": 3.5,
+            "Plan Rows": 60,
+            "Plan Width": 70,
+            "Actual Startup Time": 0.004,
+            "Actual Total Time": 0.011,
+            "Actual Rows": 60,
+            "Actual Loops": 1,
+            "Filter": "(id_curso = 1)",
+            "Rows Removed by Filter": 60,
+            "Shared Hit Blocks": 2,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.021,
           "Triggers": [],
           "Execution Time": 0.017
         }
@@ -992,7 +992,7 @@
             "Total Cost": 11.5,
             "Plan Rows": 12,
             "Plan Width": 40,
-            "Actual Startup Time": 0.018,
+            "Actual Startup Time": 0.023,
             "Actual Total Time": 0.028,
             "Actual Rows": 12,
             "Actual Loops": 1,
@@ -1021,9 +1021,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.051,
+          "Planning Time": 0.077,
           "Triggers": [],
-          "Execution Time": 0.034
+          "Execution Time": 0.033
         }
       ],
       [
@@ -1038,192 +1038,8 @@
             "Total Cost": 11.5,
             "Plan Rows": 12,
             "Plan Width": 40,
-            "Actual Startup Time": 0.016,
-            "Actual Total Time": 0.022,
-            "Actual Rows": 12,
-            "Actual Loops": 1,
-            "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
-            "Rows Removed by Filter": 348,
-            "Shared Hit Blocks": 7,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.021,
-          "Triggers": [],
-          "Execution Time": 0.027
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_historico",
-            "Alias": "tb_historico",
-            "Startup Cost": 0.0,
-            "Total Cost": 11.5,
-            "Plan Rows": 12,
-            "Plan Width": 40,
-            "Actual Startup Time": 0.016,
-            "Actual Total Time": 0.021,
-            "Actual Rows": 12,
-            "Actual Loops": 1,
-            "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
-            "Rows Removed by Filter": 348,
-            "Shared Hit Blocks": 7,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.02,
-          "Triggers": [],
-          "Execution Time": 0.026
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_historico",
-            "Alias": "tb_historico",
-            "Startup Cost": 0.0,
-            "Total Cost": 11.5,
-            "Plan Rows": 12,
-            "Plan Width": 40,
-            "Actual Startup Time": 0.015,
-            "Actual Total Time": 0.02,
-            "Actual Rows": 12,
-            "Actual Loops": 1,
-            "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
-            "Rows Removed by Filter": 348,
-            "Shared Hit Blocks": 7,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.018,
-          "Triggers": [],
-          "Execution Time": 0.025
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_historico",
-            "Alias": "tb_historico",
-            "Startup Cost": 0.0,
-            "Total Cost": 11.5,
-            "Plan Rows": 12,
-            "Plan Width": 40,
-            "Actual Startup Time": 0.026,
-            "Actual Total Time": 0.089,
-            "Actual Rows": 12,
-            "Actual Loops": 1,
-            "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
-            "Rows Removed by Filter": 348,
-            "Shared Hit Blocks": 7,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.024,
-          "Triggers": [],
-          "Execution Time": 0.095
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_historico",
-            "Alias": "tb_historico",
-            "Startup Cost": 0.0,
-            "Total Cost": 11.5,
-            "Plan Rows": 12,
-            "Plan Width": 40,
-            "Actual Startup Time": 0.015,
-            "Actual Total Time": 0.021,
+            "Actual Startup Time": 0.037,
+            "Actual Total Time": 0.042,
             "Actual Rows": 12,
             "Actual Loops": 1,
             "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
@@ -1253,7 +1069,7 @@
           },
           "Planning Time": 0.019,
           "Triggers": [],
-          "Execution Time": 0.025
+          "Execution Time": 0.047
         }
       ],
       [
@@ -1268,8 +1084,146 @@
             "Total Cost": 11.5,
             "Plan Rows": 12,
             "Plan Width": 40,
-            "Actual Startup Time": 0.015,
-            "Actual Total Time": 0.021,
+            "Actual Startup Time": 0.018,
+            "Actual Total Time": 0.024,
+            "Actual Rows": 12,
+            "Actual Loops": 1,
+            "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
+            "Rows Removed by Filter": 348,
+            "Shared Hit Blocks": 7,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.018,
+          "Triggers": [],
+          "Execution Time": 0.028
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_historico",
+            "Alias": "tb_historico",
+            "Startup Cost": 0.0,
+            "Total Cost": 11.5,
+            "Plan Rows": 12,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.017,
+            "Actual Total Time": 0.023,
+            "Actual Rows": 12,
+            "Actual Loops": 1,
+            "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
+            "Rows Removed by Filter": 348,
+            "Shared Hit Blocks": 7,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.018,
+          "Triggers": [],
+          "Execution Time": 0.027
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_historico",
+            "Alias": "tb_historico",
+            "Startup Cost": 0.0,
+            "Total Cost": 11.5,
+            "Plan Rows": 12,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.023,
+            "Actual Total Time": 0.028,
+            "Actual Rows": 12,
+            "Actual Loops": 1,
+            "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
+            "Rows Removed by Filter": 348,
+            "Shared Hit Blocks": 7,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.023,
+          "Triggers": [],
+          "Execution Time": 0.036
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_historico",
+            "Alias": "tb_historico",
+            "Startup Cost": 0.0,
+            "Total Cost": 11.5,
+            "Plan Rows": 12,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.018,
+            "Actual Total Time": 0.024,
             "Actual Rows": 12,
             "Actual Loops": 1,
             "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
@@ -1299,13 +1253,105 @@
           },
           "Planning Time": 0.02,
           "Triggers": [],
-          "Execution Time": 0.025
+          "Execution Time": 0.028
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_historico",
+            "Alias": "tb_historico",
+            "Startup Cost": 0.0,
+            "Total Cost": 11.5,
+            "Plan Rows": 12,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.017,
+            "Actual Total Time": 0.023,
+            "Actual Rows": 12,
+            "Actual Loops": 1,
+            "Filter": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
+            "Rows Removed by Filter": 348,
+            "Shared Hit Blocks": 7,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.019,
+          "Triggers": [],
+          "Execution Time": 0.027
         }
       ]
     ]
   ],
   "depois": [
     [
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_matricula",
+            "Alias": "tb_matricula",
+            "Startup Cost": 0.0,
+            "Total Cost": 8.4,
+            "Plan Rows": 60,
+            "Plan Width": 24,
+            "Actual Startup Time": 0.008,
+            "Actual Total Time": 0.03,
+            "Actual Rows": 60,
+            "Actual Loops": 1,
+            "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
+            "Rows Removed by Filter": 300,
+            "Shared Hit Blocks": 3,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 19,
+            "Shared Read Blocks": 1,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.109,
+          "Triggers": [],
+          "Execution Time": 0.04
+        }
+      ],
       [
         {
           "Plan": {
@@ -1336,8 +1382,8 @@
             "Temp Written Blocks": 0
           },
           "Planning": {
-            "Shared Hit Blocks": 17,
-            "Shared Read Blocks": 1,
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
             "Shared Dirtied Blocks": 0,
             "Shared Written Blocks": 0,
             "Local Hit Blocks": 0,
@@ -1347,9 +1393,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.089,
+          "Planning Time": 0.066,
           "Triggers": [],
-          "Execution Time": 0.031
+          "Execution Time": 0.03
         }
       ],
       [
@@ -1393,7 +1439,7 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.042,
+          "Planning Time": 0.033,
           "Triggers": [],
           "Execution Time": 0.028
         }
@@ -1439,52 +1485,6 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.033,
-          "Triggers": [],
-          "Execution Time": 0.027
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_matricula",
-            "Alias": "tb_matricula",
-            "Startup Cost": 0.0,
-            "Total Cost": 8.4,
-            "Plan Rows": 60,
-            "Plan Width": 24,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.02,
-            "Actual Rows": 60,
-            "Actual Loops": 1,
-            "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
-            "Rows Removed by Filter": 300,
-            "Shared Hit Blocks": 3,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
           "Planning Time": 0.031,
           "Triggers": [],
           "Execution Time": 0.027
@@ -1502,8 +1502,8 @@
             "Total Cost": 8.4,
             "Plan Rows": 60,
             "Plan Width": 24,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.021,
+            "Actual Startup Time": 0.006,
+            "Actual Total Time": 0.023,
             "Actual Rows": 60,
             "Actual Loops": 1,
             "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
@@ -1531,9 +1531,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.031,
+          "Planning Time": 0.059,
           "Triggers": [],
-          "Execution Time": 0.027
+          "Execution Time": 0.029
         }
       ],
       [
@@ -1548,8 +1548,8 @@
             "Total Cost": 8.4,
             "Plan Rows": 60,
             "Plan Width": 24,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.02,
+            "Actual Startup Time": 0.015,
+            "Actual Total Time": 0.042,
             "Actual Rows": 60,
             "Actual Loops": 1,
             "Filter": "((id_turma = 1) AND (status_matricula = 'MATRICULADO'::academico.status_mat_t))",
@@ -1577,9 +1577,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.029,
+          "Planning Time": 0.03,
           "Triggers": [],
-          "Execution Time": 0.026
+          "Execution Time": 0.048
         }
       ],
       [
@@ -1594,7 +1594,7 @@
             "Total Cost": 8.4,
             "Plan Rows": 60,
             "Plan Width": 24,
-            "Actual Startup Time": 0.004,
+            "Actual Startup Time": 0.005,
             "Actual Total Time": 0.022,
             "Actual Rows": 60,
             "Actual Loops": 1,
@@ -1623,9 +1623,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.031,
+          "Planning Time": 0.032,
           "Triggers": [],
-          "Execution Time": 0.027
+          "Execution Time": 0.028
         }
       ]
     ],
@@ -1642,7 +1642,53 @@
             "Total Cost": 1.12,
             "Plan Rows": 2,
             "Plan Width": 28,
-            "Actual Startup Time": 0.003,
+            "Actual Startup Time": 0.004,
+            "Actual Total Time": 0.005,
+            "Actual Rows": 2,
+            "Actual Loops": 1,
+            "Filter": "(id_periodo_letivo = 1)",
+            "Rows Removed by Filter": 8,
+            "Shared Hit Blocks": 1,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 31,
+            "Shared Read Blocks": 1,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.145,
+          "Triggers": [],
+          "Execution Time": 0.01
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_turma",
+            "Alias": "tb_turma",
+            "Startup Cost": 0.0,
+            "Total Cost": 1.12,
+            "Plan Rows": 2,
+            "Plan Width": 28,
+            "Actual Startup Time": 0.004,
             "Actual Total Time": 0.004,
             "Actual Rows": 2,
             "Actual Loops": 1,
@@ -1660,8 +1706,8 @@
             "Temp Written Blocks": 0
           },
           "Planning": {
-            "Shared Hit Blocks": 33,
-            "Shared Read Blocks": 1,
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
             "Shared Dirtied Blocks": 0,
             "Shared Written Blocks": 0,
             "Local Hit Blocks": 0,
@@ -1671,7 +1717,7 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.068,
+          "Planning Time": 0.026,
           "Triggers": [],
           "Execution Time": 0.009
         }
@@ -1719,7 +1765,7 @@
           },
           "Planning Time": 0.024,
           "Triggers": [],
-          "Execution Time": 0.008
+          "Execution Time": 0.009
         }
       ],
       [
@@ -1810,52 +1856,6 @@
             "Temp Written Blocks": 0
           },
           "Planning Time": 0.024,
-          "Triggers": [],
-          "Execution Time": 0.008
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_turma",
-            "Alias": "tb_turma",
-            "Startup Cost": 0.0,
-            "Total Cost": 1.12,
-            "Plan Rows": 2,
-            "Plan Width": 28,
-            "Actual Startup Time": 0.003,
-            "Actual Total Time": 0.004,
-            "Actual Rows": 2,
-            "Actual Loops": 1,
-            "Filter": "(id_periodo_letivo = 1)",
-            "Rows Removed by Filter": 8,
-            "Shared Hit Blocks": 1,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.023,
           "Triggers": [],
           "Execution Time": 0.008
         }
@@ -1995,9 +1995,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.112,
+          "Planning Time": 0.083,
           "Triggers": [],
-          "Execution Time": 0.018
+          "Execution Time": 0.019
         }
       ],
       [
@@ -2014,52 +2014,6 @@
             "Plan Width": 70,
             "Actual Startup Time": 0.004,
             "Actual Total Time": 0.011,
-            "Actual Rows": 60,
-            "Actual Loops": 1,
-            "Filter": "(id_curso = 1)",
-            "Rows Removed by Filter": 60,
-            "Shared Hit Blocks": 2,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.024,
-          "Triggers": [],
-          "Execution Time": 0.017
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_aluno",
-            "Alias": "tb_aluno",
-            "Startup Cost": 0.0,
-            "Total Cost": 3.5,
-            "Plan Rows": 60,
-            "Plan Width": 70,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.01,
             "Actual Rows": 60,
             "Actual Loops": 1,
             "Filter": "(id_curso = 1)",
@@ -2105,6 +2059,52 @@
             "Plan Rows": 60,
             "Plan Width": 70,
             "Actual Startup Time": 0.004,
+            "Actual Total Time": 0.011,
+            "Actual Rows": 60,
+            "Actual Loops": 1,
+            "Filter": "(id_curso = 1)",
+            "Rows Removed by Filter": 60,
+            "Shared Hit Blocks": 2,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.024,
+          "Triggers": [],
+          "Execution Time": 0.017
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_aluno",
+            "Alias": "tb_aluno",
+            "Startup Cost": 0.0,
+            "Total Cost": 3.5,
+            "Plan Rows": 60,
+            "Plan Width": 70,
+            "Actual Startup Time": 0.004,
             "Actual Total Time": 0.012,
             "Actual Rows": 60,
             "Actual Loops": 1,
@@ -2136,6 +2136,52 @@
           "Planning Time": 0.024,
           "Triggers": [],
           "Execution Time": 0.017
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Seq Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Relation Name": "tb_aluno",
+            "Alias": "tb_aluno",
+            "Startup Cost": 0.0,
+            "Total Cost": 3.5,
+            "Plan Rows": 60,
+            "Plan Width": 70,
+            "Actual Startup Time": 0.013,
+            "Actual Total Time": 0.021,
+            "Actual Rows": 60,
+            "Actual Loops": 1,
+            "Filter": "(id_curso = 1)",
+            "Rows Removed by Filter": 60,
+            "Shared Hit Blocks": 2,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.04,
+          "Triggers": [],
+          "Execution Time": 0.027
         }
       ],
       [
@@ -2226,52 +2272,6 @@
             "Temp Written Blocks": 0
           },
           "Planning Time": 0.024,
-          "Triggers": [],
-          "Execution Time": 0.017
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Seq Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Relation Name": "tb_aluno",
-            "Alias": "tb_aluno",
-            "Startup Cost": 0.0,
-            "Total Cost": 3.5,
-            "Plan Rows": 60,
-            "Plan Width": 70,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.011,
-            "Actual Rows": 60,
-            "Actual Loops": 1,
-            "Filter": "(id_curso = 1)",
-            "Rows Removed by Filter": 60,
-            "Shared Hit Blocks": 2,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.023,
           "Triggers": [],
           "Execution Time": 0.017
         }
@@ -2310,7 +2310,7 @@
             "Temp Written Blocks": 0
           },
           "Planning": {
-            "Shared Hit Blocks": 30,
+            "Shared Hit Blocks": 36,
             "Shared Read Blocks": 1,
             "Shared Dirtied Blocks": 0,
             "Shared Written Blocks": 0,
@@ -2321,9 +2321,57 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.072,
+          "Planning Time": 0.074,
           "Triggers": [],
-          "Execution Time": 0.021
+          "Execution Time": 0.027
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Scan Direction": "Forward",
+            "Index Name": "ix_historico_situacao",
+            "Relation Name": "tb_historico",
+            "Alias": "tb_historico",
+            "Startup Cost": 0.15,
+            "Total Cost": 9.26,
+            "Plan Rows": 12,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.004,
+            "Actual Total Time": 0.005,
+            "Actual Rows": 12,
+            "Actual Loops": 1,
+            "Index Cond": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
+            "Rows Removed by Index Recheck": 0,
+            "Shared Hit Blocks": 3,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.023,
+          "Triggers": [],
+          "Execution Time": 0.011
         }
       ],
       [
@@ -2369,7 +2417,7 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.023,
+          "Planning Time": 0.024,
           "Triggers": [],
           "Execution Time": 0.01
         }
@@ -2388,8 +2436,56 @@
             "Total Cost": 9.26,
             "Plan Rows": 12,
             "Plan Width": 40,
-            "Actual Startup Time": 0.003,
+            "Actual Startup Time": 0.004,
             "Actual Total Time": 0.005,
+            "Actual Rows": 12,
+            "Actual Loops": 1,
+            "Index Cond": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
+            "Rows Removed by Index Recheck": 0,
+            "Shared Hit Blocks": 3,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.041,
+          "Triggers": [],
+          "Execution Time": 0.012
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Scan Direction": "Forward",
+            "Index Name": "ix_historico_situacao",
+            "Relation Name": "tb_historico",
+            "Alias": "tb_historico",
+            "Startup Cost": 0.15,
+            "Total Cost": 9.26,
+            "Plan Rows": 12,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.004,
+            "Actual Total Time": 0.007,
             "Actual Rows": 12,
             "Actual Loops": 1,
             "Index Cond": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
@@ -2419,7 +2515,55 @@
           },
           "Planning Time": 0.023,
           "Triggers": [],
-          "Execution Time": 0.01
+          "Execution Time": 0.027
+        }
+      ],
+      [
+        {
+          "Plan": {
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Scan Direction": "Forward",
+            "Index Name": "ix_historico_situacao",
+            "Relation Name": "tb_historico",
+            "Alias": "tb_historico",
+            "Startup Cost": 0.15,
+            "Total Cost": 9.26,
+            "Plan Rows": 12,
+            "Plan Width": 40,
+            "Actual Startup Time": 0.004,
+            "Actual Total Time": 0.005,
+            "Actual Rows": 12,
+            "Actual Loops": 1,
+            "Index Cond": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
+            "Rows Removed by Index Recheck": 0,
+            "Shared Hit Blocks": 3,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.025,
+          "Triggers": [],
+          "Execution Time": 0.011
         }
       ],
       [
@@ -2465,153 +2609,9 @@
             "Temp Read Blocks": 0,
             "Temp Written Blocks": 0
           },
-          "Planning Time": 0.056,
+          "Planning Time": 0.029,
           "Triggers": [],
-          "Execution Time": 0.011
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Index Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Scan Direction": "Forward",
-            "Index Name": "ix_historico_situacao",
-            "Relation Name": "tb_historico",
-            "Alias": "tb_historico",
-            "Startup Cost": 0.15,
-            "Total Cost": 9.26,
-            "Plan Rows": 12,
-            "Plan Width": 40,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.005,
-            "Actual Rows": 12,
-            "Actual Loops": 1,
-            "Index Cond": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
-            "Rows Removed by Index Recheck": 0,
-            "Shared Hit Blocks": 3,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.023,
-          "Triggers": [],
-          "Execution Time": 0.01
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Index Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Scan Direction": "Forward",
-            "Index Name": "ix_historico_situacao",
-            "Relation Name": "tb_historico",
-            "Alias": "tb_historico",
-            "Startup Cost": 0.15,
-            "Total Cost": 9.26,
-            "Plan Rows": 12,
-            "Plan Width": 40,
-            "Actual Startup Time": 0.004,
-            "Actual Total Time": 0.005,
-            "Actual Rows": 12,
-            "Actual Loops": 1,
-            "Index Cond": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
-            "Rows Removed by Index Recheck": 0,
-            "Shared Hit Blocks": 3,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.023,
-          "Triggers": [],
-          "Execution Time": 0.01
-        }
-      ],
-      [
-        {
-          "Plan": {
-            "Node Type": "Index Scan",
-            "Parallel Aware": false,
-            "Async Capable": false,
-            "Scan Direction": "Forward",
-            "Index Name": "ix_historico_situacao",
-            "Relation Name": "tb_historico",
-            "Alias": "tb_historico",
-            "Startup Cost": 0.15,
-            "Total Cost": 9.26,
-            "Plan Rows": 12,
-            "Plan Width": 40,
-            "Actual Startup Time": 0.006,
-            "Actual Total Time": 0.008,
-            "Actual Rows": 12,
-            "Actual Loops": 1,
-            "Index Cond": "(situacao_historico = 'REPROVADO_FALTA'::academico.situacao_t)",
-            "Rows Removed by Index Recheck": 0,
-            "Shared Hit Blocks": 3,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning": {
-            "Shared Hit Blocks": 0,
-            "Shared Read Blocks": 0,
-            "Shared Dirtied Blocks": 0,
-            "Shared Written Blocks": 0,
-            "Local Hit Blocks": 0,
-            "Local Read Blocks": 0,
-            "Local Dirtied Blocks": 0,
-            "Local Written Blocks": 0,
-            "Temp Read Blocks": 0,
-            "Temp Written Blocks": 0
-          },
-          "Planning Time": 0.026,
-          "Triggers": [],
-          "Execution Time": 0.014
+          "Execution Time": 0.012
         }
       ]
     ]

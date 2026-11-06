@@ -1,150 +1,77 @@
-# Sistema de Matrícula Acadêmica — Marco 1
+# Sistema de Matrícula Acadêmica — Marcos 1 e 2
 
-## Descrição
+Projeto de Banco de Dados II. O Marco 1 foi preservado: 16 tabelas, carga de 120 alunos, dez turmas, 360 matrículas e históricos, dez consultas e diagrama. O Marco 2 adiciona três views, indicadores materializados, quatro índices medidos, disputa de vagas com duas soluções alternativas, papéis/RLS e recuperação reproduzível.
 
-Projeto desenvolvido para a disciplina de Banco de Dados II.
+## Ambiente e limites
 
-O projeto consiste no desenvolvimento de um banco de dados para um Sistema de
-Matrícula Acadêmica, contemplando o gerenciamento de campi, cursos, currículos,
-disciplinas, pré-requisitos, professores, salas, períodos letivos, turmas,
-alunos, matrículas e histórico escolar.
+Os testes técnicos foram executados em **PostgreSQL 17.11**, em contêineres novos e isolados. Isso **não é validação oficial**. O enunciado informa 17, mas o guia anterior registrava 16; o pacote Docker efetivamente fornecido pela disciplina não está disponível para confirmar a divergência. Consulte [ambiente e ferramentas](docs/ambiente-e-ferramentas.md). Na apresentação oficial, confirmar a imagem do pacote e `SHOW server_version`, e executar no pgAdmin conforme o professor. Não substituir nem apagar o ambiente da disciplina.
 
-## Escopo do Marco 1
+Autores e responsabilidades existentes: [AUTORES.md](AUTORES.md). A composição de dupla ou eventual terceiro integrante e as responsabilidades formais restantes dependem de confirmação; nenhum nome ou contribuição foi presumido.
 
-- DDL completo: schema `academico`, tipos, domínios, 16 tabelas e restrições de
-  integridade declarativas (PK, FK, UNIQUE, CHECK, EXCLUDE e índice parcial).
-- Carga didática determinística: 120 alunos, 10 turmas (6 na oferta de 2026/2),
-  360 matrículas e 360 registros de histórico.
-- 10 consultas comentadas, de complexidade crescente, incluindo junção externa
-  com agregação, duas consultas recursivas e duas com funções de janela.
+## Execução técnica isolada do zero (PowerShell)
 
-Este marco não implementa transações concorrentes, views, segurança, auditoria
-automática por gatilho nem controle de disputa pela última vaga.
+Pré-requisitos: Git, Docker Desktop em execução e Python 3.10+. Execute na raiz do clone. Use nomes/portas novos se já estiverem ocupados. A imagem 17 é o alvo técnico deste repositório, sujeito à confirmação do ambiente oficial.
 
-## Requisitos
-
-- Docker
-- Docker Compose
-- PostgreSQL 17 — fornecido pelo contêiner, não é necessário instalar localmente
-
-## Ferramentas e ambiente da disciplina
-
-O professor exige draw.io para a modelagem, pgAdmin 4 para a administração do
-banco e PostgreSQL 16 no pacote Docker fornecido pela disciplina (Google
-Classroom). Detalhes em [docs/ambiente-e-ferramentas.md](docs/ambiente-e-ferramentas.md).
-
-As instruções de execução abaixo, com `docker-compose.yml` (imagem
-`postgres:17`) e `psql`, descrevem o ambiente de testes da equipe e não
-substituem a validação oficial no ambiente da disciplina.
-
-## Estrutura do repositório
-
-```
-README.md
-AUTORES.md
-diagramabancodedadosii.drawio
-diagramabancodedadosii.drawio.pdf
-docker-compose.yml
-docs/
-  ambiente-e-ferramentas.md
-sql/
-  01-create-tables.sql
-  02-insert-data.sql
-  03-consultas.sql
-  99-validacao.sql
-```
-
-## Execução
-
-Todos os comandos abaixo são executados **na raiz do repositório**, logo após o
-clone. Os exemplos usam Git Bash no Windows, e funcionam igualmente em Linux e
-macOS.
-
-1. Clonar o repositório e entrar na pasta:
-
-```bash
+```powershell
 git clone https://github.com/PedroAyan/atividade-banco-de-dados-ii-marco-1.git
 cd atividade-banco-de-dados-ii-marco-1
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r scripts/requirements.txt
+docker run -d --name bd2-ensaio-novo -e POSTGRES_PASSWORD=postgres -p 127.0.0.1:55439:5432 postgres:17
+docker exec bd2-ensaio-novo pg_isready -h 127.0.0.1 -U postgres
 ```
 
-2. Iniciar o ambiente e esperar o banco ficar realmente pronto:
+Aguarde `accepting connections` por TCP antes de continuar (a primeira inicialização pode levar alguns segundos). Senha acima é exclusivamente didática, em localhost. O banco de ensaio se chama `postgres`; o Compose original continua disponível para o Marco 1 com `matricula_academica`, sem alterações.
 
-```bash
-docker compose up -d --wait
+```powershell
+$env:BD2_DSN='host=127.0.0.1 port=55439 dbname=postgres user=postgres password=postgres'
+.\.venv\Scripts\python.exe scripts/validar.py base
+.\.venv\Scripts\python.exe scripts/validar.py views
+.\.venv\Scripts\python.exe scripts/validar.py indices
+.\.venv\Scripts\python.exe scripts/validar.py concorrencia
+.\.venv\Scripts\python.exe scripts/validar.py seguranca
 ```
 
-O `--wait` só devolve o controle quando o healthcheck do serviço confirma que o
-PostgreSQL **definitivo** está aceitando conexões. Na primeira execução, com o
-volume vazio, isso demora alguns segundos a mais, porque o contêiner ainda
-precisa inicializar o banco antes de liberar o servidor final.
+Pare se qualquer comando falhar. O validador instala cada etapa e registra evidências reais em `evidencias/`; reexecutar etapas de criação no mesmo banco não é suportado. Crie outro contêiner para repetir. `base` recusa schema existente. A etapa de concorrência cria/remove exclusivamente suas turmas artificiais no banco de ensaio. A segurança cria um login de teste com senha didática, nunca executar esses testes no banco de trabalho.
 
-3. Conferir que o serviço está saudável:
+Para instalação sem testes, execute no Query Tool do pgAdmin como administrador, uma vez em destino novo, nesta ordem:
 
-```bash
-docker compose ps
+1. `sql/01-create-tables.sql` — DDL original; requer btree_gist.
+2. `sql/02-insert-data.sql` — carga original; recusa tabelas preenchidas.
+3. `sql/03-consultas.sql` e `sql/99-validacao.sql` — consultas e validação do Marco 1.
+4. `sql/04-views.sql` — views e materialized view.
+5. `sql/05-indices.sql` — quatro índices adicionais, incluindo parcial.
+6. `sql/06-transacoes.sql` — funções atômicas de matrícula.
+7. `sql/07-seguranca.sql` — perfis, GRANT/REVOKE e RLS; exige nomes de papéis livres no cluster.
+8. `sql/98-validacao-marco2.sql` — verificações de leitura como administrador sobre a carga didática.
+
+Os SQL 98/99 são verificações, não migrações. As funções não substituem todas as regras acadêmicas futuras (por exemplo elegibilidade por pré-requisito); seu escopo é a disputa da vaga e criação atômica de matrícula/histórico. No acesso operacional, a secretaria usa somente a solução com bloqueio. SERIALIZABLE é uma alternativa demonstrada separadamente; não misturar protocolos de escrita.
+
+## Evidências e demonstração
+
+[Views e atualização](docs/VIEWS.md), [índices e medições](docs/INDICES.md), [concorrência e retentativa](docs/CONCORRENCIA.md), [papéis e RLS](docs/SEGURANCA.md), [backup/restauração](docs/OPERACAO.md) e [roteiro de apresentação](docs/APRESENTACAO.md).
+
+Os JSON em `evidencias/` guardam versão, planos `EXPLAIN (ANALYZE, BUFFERS)` antes/depois, lotação, isolamento por login e restauração. O [estado de verificação](evidencias/STATUS.md) explicita limites. A carga pequena não permite generalizar ganhos de desempenho.
+
+## Backup e recuperação
+
+Siga [o procedimento completo](docs/OPERACAO.md). O utilitário trabalha em contêiner dedicado e no banco `postgres`, grava dump binário sem corrupção de encoding, exporta papéis sem senhas, verifica SHA256 e só restaura em destino novo. Nunca remove dados ou volumes.
+
+```powershell
+python scripts/backup.py backup --container bd2-ensaio-novo --dir backups/ensaio-novo
+docker run -d --name bd2-recuperacao-nova -e POSTGRES_PASSWORD=postgres -p 127.0.0.1:55441:5432 postgres:17
+docker exec bd2-recuperacao-nova pg_isready -h 127.0.0.1 -U postgres
+# Após accepting connections:
+python scripts/backup.py restore --container bd2-recuperacao-nova --dir backups/ensaio-novo
+$env:BD2_RESTORE_DSN='host=127.0.0.1 port=55441 dbname=postgres user=postgres password=postgres'
+.\.venv\Scripts\python.exe scripts/verificar-restauracao.py
 ```
 
-A coluna `STATUS` deve mostrar `Up ... (healthy)`.
+O teste complementar exige o login artificial da etapa `seguranca`; compara catálogos/permissões e reprovisiona a senha didática desse login no destino para provar RLS restaurado. Dumps e credenciais ficam fora do Git. Para recomeçar, escolha novo nome/porta: não apague o banco nem volumes anteriores.
 
-4. Criar o schema e as tabelas (**uma única vez, em um banco novo**):
+## Entrega
 
-```bash
-docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matricula_academica < sql/01-create-tables.sql
-```
-
-5. Carregar os dados:
-
-```bash
-docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matricula_academica < sql/02-insert-data.sql
-```
-
-Ao final, o script imprime as quantidades carregadas: 120 alunos, 10 turmas,
-360 matrículas e 360 históricos.
-
-6. Executar as 10 consultas:
-
-```bash
-docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matricula_academica < sql/03-consultas.sql
-```
-
-7. Listar as tabelas criadas:
-
-```bash
-docker compose exec -T postgres psql -X -U postgres -d matricula_academica -c '\dt academico.*'
-```
-
-O resultado esperado é uma lista com as 16 tabelas do modelo, todas com o prefixo `tb_`.
-
-### Conferir a entrega (opcional)
-
-O arquivo `sql/99-validacao.sql` **não faz parte da criação do banco**: a ordem
-normal continua sendo 01, 02 e 03. Ele existe para conferir, depois que 01 e 02
-rodaram, se a entrega do Marco 1 está íntegra.
-
-```bash
-docker compose exec -T postgres psql -X -v ON_ERROR_STOP=1 -U postgres -d matricula_academica < sql/99-validacao.sql
-```
-
-São verificações **somente leitura** (a transação é `READ ONLY`), então o script
-não altera nenhum dado e pode ser executado quantas vezes quiser. Ele confere o
-schema, as 16 tabelas pelo nome, as chaves primárias, os 18 relacionamentos do
-modelo um a um, a ausência de FK em `tb_log_matricula`, as colunas geradas, os
-mínimos exigidos pelo enunciado (100 alunos, 6 turmas, 300 matrículas) e a
-existência de turma sem matrícula para a consulta 04.
-
-Em caso de sucesso, termina com um resumo. Havendo qualquer inconsistência, ele
-encerra com erro e lista todos os problemas encontrados de uma vez.
-
-### Recomeçar do zero
-
-Os scripts não apagam dados: `01-create-tables.sql` falha se o schema
-`academico` já existir, e `02-insert-data.sql` falha se alguma tabela já
-contiver registros. Para uma execução completamente nova, remova o volume do
-Docker e repita os passos a partir do item 2:
-
-```bash
-docker compose down -v
-```
+O repositório contém SQL numerado, documentação, evidências e scripts públicos. `python scripts/empacotar.py` gera ZIP local em `entrega/` somente com arquivos versionados permitidos e registra SHA256. Documentos privados, dumps e ambientes Python não entram. O roteiro de apresentação cobre integridade, anomalia, correções, plano, RLS e restauração. Confirmar grupo e ambiente oficial antes da entrega acadêmica.
 
 ## Decisões e limites desta etapa
 
