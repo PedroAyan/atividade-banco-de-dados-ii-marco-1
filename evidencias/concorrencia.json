@@ -1,0 +1,30 @@
+{
+  "anomalia": {
+    "outcomes": [
+      "commit",
+      "commit"
+    ],
+    "ocupadas": 2,
+    "capacidade": 1,
+    "seconds": 0.018314999993890524
+  },
+  "bloqueio": {
+    "outcomes": [
+      "commit",
+      "P0001"
+    ],
+    "ocupadas": 1,
+    "capacidade": 1,
+    "seconds": 0.018487200024537742
+  },
+  "serializavel": {
+    "outcomes": [
+      "40001",
+      "commit",
+      "retry P0001"
+    ],
+    "ocupadas": 1,
+    "capacidade": 1,
+    "seconds": 0.03583740000613034
+  }
+}
