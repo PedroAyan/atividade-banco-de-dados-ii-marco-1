@@ -1,0 +1,10 @@
+{
+  "proprios": 3,
+  "outro": 0,
+  "negados": [
+    "select * from academico.identidade_aluno",
+    "update academico.tb_historico set nota_a1_historico=10",
+    "select academico.matricular_bloqueio(2,1)"
+  ],
+  "administrativos": 360
+}
