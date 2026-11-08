@@ -66,6 +66,11 @@ Precauções:
   extensões.
 - `02-insert-data.sql` recusa a carga se alguma tabela já tiver registros.
 - `03-consultas.sql` e `99-validacao.sql` são somente leitura.
+- Para apresentar as dez consultas no pgAdmin, selecione um bloco `SELECT` ou
+  `WITH` completo, até o `;`, e pressione **F5**. Veja a grade em **Data Output**.
+  Execute uma consulta por vez; ao executar o arquivo inteiro, o `COMMIT` final
+  não produz uma grade. Cada consulta qualifica as tabelas no schema `academico`,
+  então pode ser executada isoladamente sem configurar `search_path`.
 - `99-validacao.sql` confere 16 tabelas com prefixo `tb_`, as chaves primárias, os
   18 relacionamentos (chaves estrangeiras), as colunas geradas e a carga
   esperada.
