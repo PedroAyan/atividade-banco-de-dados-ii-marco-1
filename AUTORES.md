@@ -1,22 +1,19 @@
 # Autores
 
+Somos o grupo responsável pelo projeto de Banco de Dados II.
+
 ## Yago Santos Porto
 
 Matrícula: 2612130022
 
-Responsável por:
-- Modelagem física e desempenho.
+Fiquei com a modelagem física e a análise de desempenho.
 
 ## Pedro Ayan Machado Cordeiro
 
 Matrícula: 2512130049
 
-Responsável por:
-- Configuração do PostgreSQL com Docker Compose.
-- Desenvolvimento do DDL e das restrições do banco.
+Configurei o PostgreSQL com Docker Compose e desenvolvi o DDL e as restrições do banco.
 
-## Observação sobre a composição do grupo
+## Iury de Matos Souza
 
-O grupo é atualmente composto pelos dois integrantes listados acima, e as
-responsabilidades técnicas estão distribuídas entre eles conforme documentado
-nesta página.
+Matrícula: 2322130048

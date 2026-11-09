@@ -1,6 +1,6 @@
 # Medição dos índices
 
-PostgreSQL e planos completos em `evidencias/indices.json`. Carga original inalterada: 120 alunos, 10 turmas e 360 históricos/matrículas. Sete execuções por consulta, mesmas condições e ANALYZE em ambas as fases; cache aquecido. Não usamos enable_seqscan=off. Tempos pequenos têm ruído e não sustentam promessa de aceleração.
+Comparamos os planos com a mesma carga de 120 alunos, 10 turmas, 360 matrículas e 360 históricos. Rodamos cada consulta sete vezes antes e sete vezes depois de criar os índices, com cache aquecido e `ANALYZE` nas duas etapas. Deixamos o PostgreSQL escolher os planos normalmente, com `enable_seqscan` habilitado. Como os tempos são muito baixos, pequenas diferenças podem ser só ruído. Os planos completos estão em [indices.json](../evidencias/indices.json).
 
 | Índice | Antes mediana ms | Depois mediana ms | Variação |
 |---|---:|---:|---:|

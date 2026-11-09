@@ -1,6 +1,6 @@
 # Disputa pela última vaga
 
-A demonstração usa duas conexões reais sincronizadas por barreira em cluster isolado. Na versão ingênua, ambas contam zero matrículas e inserem: duas matrículas para uma vaga. `evidencias/concorrencia.json` registra a execução real.
+Para reproduzir a disputa pela última vaga, abrimos duas conexões no mesmo banco de teste e sincronizamos as tentativas com uma barreira. Sem proteção, as duas sessões veem a vaga livre e matriculam alunos diferentes. A turma acaba com duas matrículas para uma vaga. Registramos a execução em [concorrencia.json](../evidencias/concorrencia.json).
 
 `matricular_bloqueio` exige READ COMMITTED, bloqueia a linha da turma com FOR UPDATE e só então conta matrículas em outro comando, com snapshot atualizado. O segundo solicitante espera e recebe P0001 (turma lotada). O lock dura até COMMIT/ROLLBACK; manter a transação curta. Linhas de turmas diferentes não compartilham esse lock.
 
@@ -12,4 +12,4 @@ Produção: toda entrada de matrícula deve passar pela função, ou aderir ao m
 
 Exemplo secretaria: BEGIN ISOLATION LEVEL READ COMMITTED; SELECT academico.matricular_bloqueio(1,9); COMMIT;. Para a alternativa, BEGIN ISOLATION LEVEL SERIALIZABLE e matricular_serializavel. Ao receber qualquer erro execute ROLLBACK.
 
-As estrategias sao alternativas: o perfil secretaria recebe somente a funcao de bloqueio. A demonstracao SERIALIZABLE roda como administrador isolado. Para adotar SERIALIZABLE operacionalmente, todos os escritores participantes precisam usar esse isolamento, revogando a rota READ COMMITTED. Nao misturar os dois protocolos.
+No projeto, liberamos para a secretaria apenas a função que usa bloqueio. Para comparar as duas estratégias, demonstramos `SERIALIZABLE` como administrador em um banco isolado. Se adotarmos essa estratégia no sistema, todas as operações que gravam matrículas terão de usar o mesmo isolamento e a rota com `READ COMMITTED` terá de ser revogada.

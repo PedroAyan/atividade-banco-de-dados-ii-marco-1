@@ -1,12 +1,12 @@
 # Sistema de Matrícula Acadêmica | Banco de Dados II
 
-Projeto dos Marcos 1 e 2. O Marco 1 tem 16 tabelas, 18 chaves estrangeiras, 120 alunos, 10 turmas, 360 matrículas e 360 históricos, além de 10 consultas. O Marco 2 acrescenta views, índices, duas soluções para a disputa pela última vaga, permissões por perfil e recuperação por backup.
+Neste trabalho de Banco de Dados II, montamos um sistema de matrícula acadêmica. No Marco 1, nossa base ficou com 16 tabelas, 18 chaves estrangeiras, 120 alunos, 10 turmas, 360 matrículas e 360 históricos, e escrevemos 10 consultas para explorar esses dados. No Marco 2, acrescentamos views, índices, duas soluções para a disputa pela última vaga, permissões por perfil e recuperação por backup.
 
 ## Baixar e preparar na sala
 
 No GitHub, use **Code → Download ZIP** e extraia o ZIP inteiro. Abra este README na pasta extraída e tenha o [PDF do diagrama](diagramabancodedadosii.drawio.pdf) disponível para mostrar a estrutura. O [arquivo Draw.io](diagramabancodedadosii.drawio) é a versão editável.
 
-O enunciado pede o **contêiner PostgreSQL 17 fornecido pela disciplina**. Para a apresentação oficial, siga o guia do professor para iniciar o pacote e use o host, a porta e as credenciais do guia. Confirme a versão com `SHOW server_version;`. Os comandos abaixo montam um **ensaio local separado** para praticar do zero. Eles usam Docker Desktop, pgAdmin 4 e Python 3.10+ para o script de backup.
+O enunciado pede o **contêiner PostgreSQL 17 fornecido pela disciplina**. Para a apresentação oficial, siga o guia do professor para iniciar o pacote e use o host, a porta e as credenciais do guia. Confirme a versão com `SHOW server_version;`. Para praticar do zero, montamos um **ensaio local separado** com Docker Desktop e pgAdmin 4. Para a etapa de backup, usamos também Python 3.10 ou superior.
 
 Abra o PowerShell na pasta extraída e execute:
 
@@ -19,24 +19,25 @@ Repita só a segunda linha até aparecer `accepting connections`. Se já houver 
 
 No pgAdmin, clique com o botão direito em **Servers → Register → Server**. Use **BD2 – Ensaio** em **General**. Em **Connection**, use host `127.0.0.1`, porta `55439`, banco de manutenção `postgres`, usuário `postgres` e senha `postgres`. Essas credenciais são apenas para o ensaio local.
 
-Abra **Databases → postgres → Query Tool**. Pelo ícone de pasta, abra cada SQL na ordem abaixo e clique em **▶ Execute script** com o arquivo inteiro, sem seleção. Instale uma vez em um banco vazio. Se aparecer `ERROR`, pare e veja a primeira mensagem. Para liberar uma aba com `25P02`, rode só `ROLLBACK;` nela.
+Abra **Databases → postgres → Query Tool**. Pelo ícone de pasta, abra os arquivos na ordem abaixo. Rode cada script de instalação e validação com **▶ Execute script**, com o arquivo inteiro e sem seleção. Use um banco vazio e faça a instalação uma vez. No passo 3, execute uma consulta por vez conforme a seção [Tabelas, consultas e views](#1-tabelas-consultas-e-views). Se aparecer `ERROR`, pare e veja a primeira mensagem. Para liberar uma aba com `25P02`, rode só `ROLLBACK;` nela.
 
 | Ordem | Arquivo | O que faz |
 | --- | --- | --- |
 | 1 | [01-create-tables.sql](sql/01-create-tables.sql) | Cria o schema, as tabelas e as restrições. |
 | 2 | [02-insert-data.sql](sql/02-insert-data.sql) | Carrega os dados didáticos. |
-| 3 | [04-views.sql](sql/04-views.sql) | Cria as três views e a view materializada. |
-| 4 | [05-indices.sql](sql/05-indices.sql) | Cria quatro índices adicionais, incluindo um parcial. |
-| 5 | [06-transacoes.sql](sql/06-transacoes.sql) | Cria as duas funções de matrícula concorrente. |
-| 6 | [07-seguranca.sql](sql/07-seguranca.sql) | Cria os perfis, as permissões e a segurança por linha. |
-| 7 | [99-validacao.sql](sql/99-validacao.sql) | Confere o Marco 1. Veja as mensagens de validação em **Messages**. |
-| 8 | [98-validacao-marco2.sql](sql/98-validacao-marco2.sql) | Confere carga e permissões do Marco 2. |
+| 3 | [03-consultas.sql](sql/03-consultas.sql) | Reúne as dez consultas do Marco 1. No pgAdmin, execute um bloco por vez para ver o resultado em **Data Output**. |
+| 4 | [04-views.sql](sql/04-views.sql) | Cria as três views e a view materializada. |
+| 5 | [05-indices.sql](sql/05-indices.sql) | Cria quatro índices adicionais, incluindo um parcial. |
+| 6 | [06-transacoes.sql](sql/06-transacoes.sql) | Cria as duas funções de matrícula concorrente. |
+| 7 | [07-seguranca.sql](sql/07-seguranca.sql) | Cria os perfis, as permissões e a segurança por linha. |
+| 8 | [99-validacao.sql](sql/99-validacao.sql) | Confere o Marco 1. Veja as mensagens de validação em **Messages**. |
+| 9 | [98-validacao-marco2.sql](sql/98-validacao-marco2.sql) | Confere carga e permissões do Marco 2. |
 
 Para mostrar o resultado do `98` em **Data Output**, selecione o arquivo desde `BEGIN TRANSACTION READ ONLY;` até o `SELECT ... AS resultado;`, deixando o `COMMIT;` final de fora. Execute a seleção. Depois execute só `COMMIT;` na mesma aba. Rode as validações antes de criar as turmas de demonstração ou após a limpeza indicada adiante.
 
 ## 1. Tabelas, consultas e views
 
-Em **Schemas → academico → Tables**, mostre como `tb_aluno` e `tb_turma` se ligam por `tb_matricula` e como `tb_historico` guarda o resultado da matrícula. Use o PDF do diagrama para acompanhar as conexões.
+Em **Schemas → academico → Tables**, podemos acompanhar a matrícula de um aluno do começo ao fim. Ligamos `tb_aluno` e `tb_turma` por `tb_matricula` e guardamos o resultado em `tb_historico`. Use o PDF do diagrama para acompanhar as conexões.
 
 Abra [03-consultas.sql](sql/03-consultas.sql) no Query Tool. Para ensaiar as dez consultas, selecione **um bloco completo por vez**, do `SELECT` ou `WITH` até o ponto e vírgula que encerra a consulta. Clique em **▶** ou pressione **F5** e veja **Data Output**. A consulta 08 começa em `WITH RECURSIVE` e termina em `ORDER BY c.periodo_curriculo_disciplina,c.codigo_disciplina;`. A 10 começa em `WITH medias_semestrais AS (` e termina em `FROM evolucao ORDER BY matricula_aluno,ano_periodo_letivo,semestre_periodo_letivo;`. O `COMMIT;` fica fora das seleções.
 
@@ -48,7 +49,7 @@ FROM academico.v_vagas
 ORDER BY id_turma;
 ```
 
-A turma 5 tem 40 vagas, 36 ocupadas e 4 disponíveis na carga original. As outras views são `v_oferta` e `v_historico`. Os indicadores em `mv_indicadores` ficam armazenados e podem ser atualizados pelo proprietário com `REFRESH MATERIALIZED VIEW CONCURRENTLY academico.mv_indicadores;`. Veja a [política de atualização](docs/VIEWS.md).
+A turma 5 tem 40 vagas, 36 ocupadas e 4 disponíveis na carga original. Também criamos `v_oferta` para consultar a oferta de disciplinas e `v_historico` para consultar o histórico. Os indicadores em `mv_indicadores` ficam armazenados e podem ser atualizados pelo proprietário com `REFRESH MATERIALIZED VIEW CONCURRENTLY academico.mv_indicadores;`. Veja a [política de atualização](docs/VIEWS.md).
 
 ## 2. Restrição de integridade
 
@@ -233,7 +234,7 @@ As duas conexões devem retornar os mesmos números. Se fez a limpeza das turmas
 
 ## Roteiro para o dia
 
-Prepare as conexões e deixe os comandos separados em abas antes da apresentação. Ensaiem os **9 minutos de demonstração** com esta divisão aproximada:
+Prepare as conexões e deixe os comandos separados em abas antes da apresentação. Dividimos os **9 minutos de demonstração** assim.
 
 | Tempo | O que mostrar ao vivo |
 | --- | --- |
@@ -245,7 +246,7 @@ Prepare as conexões e deixe os comandos separados em abas antes da apresentaç�
 
 Para a restauração ao vivo, já deixe o arquivo de backup gerado e o contêiner de destino **vazio e iniciado**. Durante a apresentação, execute a restauração e confira os dados. Depois vêm aproximadamente **9 minutos de arguição individual**. Cada integrante deve saber explicar também as frentes dos colegas.
 
-Os testes técnicos anteriores estão em [evidencias/](evidencias/). Os testes de demonstração foram exercitados no ensaio local com PostgreSQL 17.11. Confirme o procedimento no pacote oficial da disciplina antes de apresentar. Veja [AUTORES.md](AUTORES.md) para as responsabilidades registradas e confirme com o professor a composição do grupo.
+Ensaiamos a demonstração com PostgreSQL 17.11 e reunimos os resultados em [evidencias/](evidencias/). Ainda precisamos repetir o procedimento no pacote oficial da disciplina. Os integrantes e as responsabilidades já registradas estão em [AUTORES.md](AUTORES.md).
 
 ## Validação automatizada opcional
 

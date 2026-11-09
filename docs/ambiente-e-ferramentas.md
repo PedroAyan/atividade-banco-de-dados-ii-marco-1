@@ -1,9 +1,8 @@
 # Ambiente e ferramentas do projeto
 
-Este documento registra as ferramentas e o ambiente exigidos pelo professor para
-o projeto acadêmico de Banco de Dados II. As exigências abaixo vêm do comunicado
-do professor sobre o projeto acadêmico e o ambiente da disciplina. Este documento
-não substitui o guia de instalação oficial.
+Reunimos aqui as ferramentas e o ambiente que o professor pediu para
+o projeto de Banco de Dados II. As regras vieram do comunicado
+da disciplina. Para instalar o ambiente oficial, siga o guia do professor.
 
 ## Ferramentas obrigatórias
 
@@ -98,7 +97,7 @@ PDF `diagramabancodedadosii.drawio.pdf` é apenas a sua exportação.
 
 ## Situação atual e pendências
 
-- Os scripts SQL já usam as convenções acima. Os testes feitos até aqui rodaram em
+- Os scripts SQL já usam as convenções acima. Até aqui, fizemos os testes em
   PostgreSQL 17, em contêiner temporário e com o cliente `psql`. Isso é apenas
   histórico de testes e **não** substitui a validação oficial.
 - A validação oficial — versão a confirmar no pacote da disciplina, pgAdmin 4 e Query

@@ -1,6 +1,6 @@
 # Backup e restauração
 
-Requer Docker em execução, Python 3.10+ e contêineres oficiais PostgreSQL 17 com administrador postgres. O utilitário usa bytes via subprocess, sem redirecionar dump binário no PowerShell. Nesta versão o banco se chama postgres, em contêiner exclusivo do ensaio. Para banco com outro nome, adaptar e revisar os parâmetros -d antes de usar; não apontar ao serviço do Marco 1.
+Requer Docker em execução, Python 3.10+ e contêineres oficiais PostgreSQL 17 com administrador postgres. No script, passamos o dump binário como bytes pelo `subprocess` para evitar problemas com o redirecionamento no PowerShell. No nosso ensaio, usamos o banco `postgres` em um contêiner exclusivo. Para banco com outro nome, adaptar e revisar os parâmetros -d antes de usar; não apontar ao serviço do Marco 1.
 
 Durante o backup interromper escritas no ambiente de ensaio até concluir o manifesto: pg_dump tem snapshot consistente, mas as assinaturas posteriores precisam corresponder ao mesmo estado. Nunca usar este script em cluster compartilhado: o backup de papéis inclui o cluster inteiro. O diretório de saída deve ser novo.
 
@@ -18,4 +18,4 @@ O manifesto compara contagens e hashes de todas as linhas das 17 tabelas (16 ori
 
 As senhas dos logins não são exportadas. Reprovisionar no destino com \password no psql, ou por gestão de segredos. O teste usa apenas senha didática em contêiner local isolado.
 
-O pg_dump nao conserva as ACLs de funcoes internas geradas para RANGE. A restauracao reaplica REVOKE PUBLIC a todas as funcoes de academico, como no script 07, antes de comparar o catalogo. As concessoes nominais das funcoes da aplicacao sao preservadas pelo dump.
+Durante o teste, vimos que o `pg_dump` deixa de fora as ACLs das funções internas geradas para tipos `RANGE`. Por isso, reaplicamos `REVOKE` para `PUBLIC` em todas as funções de `academico`, como no script 07, antes de comparar o catálogo. O dump preserva as permissões concedidas a papéis específicos nas funções da aplicação.

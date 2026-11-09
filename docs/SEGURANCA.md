@@ -1,6 +1,6 @@
 # Papéis e RLS
 
-Execute 07 uma vez como administrador em cluster novo, após 04 e 06. Os papéis são NOLOGIN e não devem preexistir: colisões abortam toda a transação. Em cluster compartilhado, o administrador precisa revisar a integração sem substituir papéis existentes.
+Para testar as permissões, rodamos o script 07 como administrador em um cluster novo, depois dos scripts 04 e 06. Execute essa etapa uma vez por cluster. Os papéis são NOLOGIN e não devem preexistir: colisões abortam toda a transação. Em cluster compartilhado, o administrador precisa revisar a integração sem substituir papéis existentes.
 
 `aluno` lê oferta e somente suas matrículas/históricos; `secretaria` lê dados administrativos e matricula exclusivamente pelas funções; `coordenacao` lê e atualiza notas, frequência e situação. Nenhum deles insere diretamente matrículas, muda capacidade ou altera vínculos de identidade. Coordenação é um perfil administrativo de confiança, com leitura de todos os alunos. O schema não concede CREATE. Superusuário e proprietário ignoram RLS; por isso a prova usa login sem privilégios, e não SELECT como postgres.
 
@@ -8,4 +8,4 @@ O administrador cria um LOGIN por pessoa, concede o perfil e vincula a identidad
 
 O histórico usa view security_invoker e RLS nas duas tabelas subjacentes. A função de identidade é SECURITY DEFINER com search_path fixo e somente retorna o próprio vínculo; sua tabela não é exposta. As funções de matrícula também têm search_path fixo, não usam SQL dinâmico; somente a função de bloqueio é liberada à secretaria. Permissões PUBLIC são revogadas.
 
-Teste reproduzível: etapa seguranca do validador em cluster isolado; cria apenas o login artificial teste_aluno com senha didática isolado. Nunca execute esse teste em cluster de produção. O JSON registra três históricos próprios, zero alheios, negações de escrita e leitura do mapeamento, além da leitura administrativa. Backup de papéis não inclui senhas; reprovisionar credenciais no destino.
+Teste reproduzível: etapa seguranca do validador em cluster isolado; cria apenas o login artificial teste_aluno com senha didática isolado. Nunca execute esse teste em cluster de produção. No teste, vimos que o aluno conseguia ler seus três históricos e nenhum de outro aluno. Também registramos as tentativas bloqueadas de escrita e de leitura do mapeamento, além do resultado da consulta como administrador, em [seguranca.json](../evidencias/seguranca.json). Backup de papéis não inclui senhas; reprovisionar credenciais no destino.
