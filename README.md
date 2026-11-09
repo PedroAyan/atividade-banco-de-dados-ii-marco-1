@@ -1,25 +1,29 @@
 # Sistema de Matrícula Acadêmica | Banco de Dados II
 
-Neste trabalho de Banco de Dados II, montamos um sistema de matrícula acadêmica. No Marco 1, nossa base ficou com 16 tabelas, 18 chaves estrangeiras, 120 alunos, 10 turmas, 360 matrículas e 360 históricos, e escrevemos 10 consultas para explorar esses dados. No Marco 2, acrescentamos views, índices, duas soluções para a disputa pela última vaga, permissões por perfil e recuperação por backup.
+Fizemos um banco para acompanhar a matrícula de um aluno, desde a escolha da turma até o resultado no histórico. No Marco 1, montamos 16 tabelas com 18 chaves estrangeiras e escrevemos 10 consultas. A carga de exemplo tem 120 alunos, 10 turmas, 360 matrículas e 360 históricos. No Marco 2, adicionamos views, índices, permissões por perfil e um script de backup e restauração. Também testamos o que acontece quando dois alunos tentam pegar a última vaga ao mesmo tempo.
 
 ## Baixar e preparar na sala
 
-No GitHub, use **Code → Download ZIP** e extraia o ZIP inteiro. Abra este README na pasta extraída e tenha o [PDF do diagrama](diagramabancodedadosii.drawio.pdf) disponível para mostrar a estrutura. O [arquivo Draw.io](diagramabancodedadosii.drawio) é a versão editável.
+Baixe o projeto em **Code → Download ZIP** no GitHub e extraia a pasta. Para mostrar a estrutura do banco na apresentação, abra o [PDF do diagrama](diagramabancodedadosii.drawio.pdf). Se precisar mexer nele, abra o [arquivo editável](diagramabancodedadosii.drawio) no draw.io.
 
-O enunciado pede o **contêiner PostgreSQL 17 fornecido pela disciplina**. Para a apresentação oficial, siga o guia do professor para iniciar o pacote e use o host, a porta e as credenciais do guia. Confirme a versão com `SHOW server_version;`. Para praticar do zero, montamos um **ensaio local separado** com Docker Desktop e pgAdmin 4. Para a etapa de backup, usamos também Python 3.10 ou superior.
+Para apresentar, vamos usar o pacote do professor, como pede o enunciado. O endereço, a porta e o login estão no guia da disciplina. Depois de conectar, dá para conferir a versão com `SHOW server_version;`. O enunciado indica PostgreSQL 17.
 
-Abra o PowerShell na pasta extraída e execute:
+Para ensaiar em casa, usamos um contêiner separado com PostgreSQL 17 e conectamos pelo pgAdmin 4. Os passos a seguir são desse ensaio. Para testar a restauração, também usamos Python 3.10 ou superior.
+
+Na pasta que você extraiu, abra o PowerShell e rode os dois comandos abaixo.
 
 ```powershell
 docker run -d --name bd2-ensaio-pgadmin -e POSTGRES_PASSWORD=postgres -p 127.0.0.1:55439:5432 postgres:17
 docker exec bd2-ensaio-pgadmin pg_isready -h 127.0.0.1 -U postgres -d postgres
 ```
 
-Repita só a segunda linha até aparecer `accepting connections`. Se já houver um contêiner de ensaio com esse nome, confira se é o seu com `docker ps -a` e inicie-o com `docker start bd2-ensaio-pgadmin` se estiver parado. Para um novo ensaio, escolha nome e porta livres e use os mesmos valores nos passos seguintes.
+O primeiro comando cria o contêiner. Repita o segundo até aparecer `accepting connections`. Se já tiver criado esse contêiner, confira em `docker ps -a` e, se estiver parado, use `docker start bd2-ensaio-pgadmin`. Para montar outro ensaio, escolha um nome e uma porta livres e use esses valores nos próximos passos.
 
-No pgAdmin, clique com o botão direito em **Servers → Register → Server**. Use **BD2 – Ensaio** em **General**. Em **Connection**, use host `127.0.0.1`, porta `55439`, banco de manutenção `postgres`, usuário `postgres` e senha `postgres`. Essas credenciais são apenas para o ensaio local.
+No pgAdmin, clique com o botão direito em **Servers** e escolha **Register → Server**. Dê o nome **BD2 – Ensaio** na aba **General**. Na aba **Connection**, preencha o host com `127.0.0.1` e a porta com `55439`. No nosso ensaio, o banco de manutenção, o usuário e a senha são todos `postgres`.
 
-Abra **Databases → postgres → Query Tool**. Pelo ícone de pasta, abra os arquivos na ordem abaixo. Rode cada script de instalação e validação com **▶ Execute script**, com o arquivo inteiro e sem seleção. Use um banco vazio e faça a instalação uma vez. No passo 3, execute uma consulta por vez conforme a seção [Tabelas, consultas e views](#1-tabelas-consultas-e-views). Se aparecer `ERROR`, pare e veja a primeira mensagem. Para liberar uma aba com `25P02`, rode só `ROLLBACK;` nela.
+No banco vazio, abra **Databases → postgres → Query Tool**. Use o ícone de pasta para abrir os arquivos da tabela. Rode cada script de instalação e validação inteiro, uma vez, com **▶ Execute script**. Para o passo 3, faça como na seção [Tabelas, consultas e views](#1-tabelas-consultas-e-views) e rode uma consulta por vez.
+
+Se aparecer `ERROR`, pare na primeira mensagem para ver o que deu errado. Se a aba ficar travada na transação com `25P02`, rode só `ROLLBACK;` nela.
 
 | Ordem | Arquivo | O que faz |
 | --- | --- | --- |
@@ -33,15 +37,15 @@ Abra **Databases → postgres → Query Tool**. Pelo ícone de pasta, abra os ar
 | 8 | [99-validacao.sql](sql/99-validacao.sql) | Confere o Marco 1. Veja as mensagens de validação em **Messages**. |
 | 9 | [98-validacao-marco2.sql](sql/98-validacao-marco2.sql) | Confere carga e permissões do Marco 2. |
 
-Para mostrar o resultado do `98` em **Data Output**, selecione o arquivo desde `BEGIN TRANSACTION READ ONLY;` até o `SELECT ... AS resultado;`, deixando o `COMMIT;` final de fora. Execute a seleção. Depois execute só `COMMIT;` na mesma aba. Rode as validações antes de criar as turmas de demonstração ou após a limpeza indicada adiante.
+No script 98, selecione de `BEGIN TRANSACTION READ ONLY;` até o `SELECT ... AS resultado;` e execute. Assim dá para ver o resultado em **Data Output**. Depois, rode o `COMMIT;` separado na mesma aba. Faça as duas validações com a carga original, antes de criar as turmas da demonstração ou depois de apagá-las.
 
 ## 1. Tabelas, consultas e views
 
-Em **Schemas → academico → Tables**, podemos acompanhar a matrícula de um aluno do começo ao fim. Ligamos `tb_aluno` e `tb_turma` por `tb_matricula` e guardamos o resultado em `tb_historico`. Use o PDF do diagrama para acompanhar as conexões.
+Na apresentação, dá para começar pelo diagrama e acompanhar uma matrícula na árvore **Schemas → academico → Tables**. A tabela `tb_matricula` liga o aluno à turma. O resultado fica em `tb_historico`.
 
-Abra [03-consultas.sql](sql/03-consultas.sql) no Query Tool. Para ensaiar as dez consultas, selecione **um bloco completo por vez**, do `SELECT` ou `WITH` até o ponto e vírgula que encerra a consulta. Clique em **▶** ou pressione **F5** e veja **Data Output**. A consulta 08 começa em `WITH RECURSIVE` e termina em `ORDER BY c.periodo_curriculo_disciplina,c.codigo_disciplina;`. A 10 começa em `WITH medias_semestrais AS (` e termina em `FROM evolucao ORDER BY matricula_aluno,ano_periodo_letivo,semestre_periodo_letivo;`. O `COMMIT;` fica fora das seleções.
+No [03-consultas.sql](sql/03-consultas.sql), selecione uma consulta inteira, do `SELECT` ou `WITH` até o ponto e vírgula final. Aperte **F5** ou clique em **▶** para ver a grade em **Data Output**. Nas consultas 08 e 10, comece pelo `WITH` e inclua o `SELECT` final. Deixe o `COMMIT;` do arquivo fora da seleção.
 
-Para mostrar uma view, rode:
+Para mostrar como a gente consulta as vagas de cada turma, rode este exemplo.
 
 ```sql
 SELECT id_turma, vagas_turma, ocupadas, disponiveis
@@ -49,11 +53,11 @@ FROM academico.v_vagas
 ORDER BY id_turma;
 ```
 
-A turma 5 tem 40 vagas, 36 ocupadas e 4 disponíveis na carga original. Também criamos `v_oferta` para consultar a oferta de disciplinas e `v_historico` para consultar o histórico. Os indicadores em `mv_indicadores` ficam armazenados e podem ser atualizados pelo proprietário com `REFRESH MATERIALIZED VIEW CONCURRENTLY academico.mv_indicadores;`. Veja a [política de atualização](docs/VIEWS.md).
+Na nossa carga, a turma 5 aparece com 40 vagas, 36 ocupadas e 4 livres. Também temos a `v_oferta` para ver as turmas por disciplina e período, e a `v_historico` para consultar os resultados dos alunos. Já a `mv_indicadores` guarda o resumo da oferta. O proprietário pode atualizar esse resumo quando precisar. O comando e a rotina de atualização estão no [guia das views](docs/VIEWS.md).
 
 ## 2. Restrição de integridade
 
-No banco de ensaio, execute o bloco abaixo. Em **Messages**, o erro `23514` da restrição `tb_turma_vagas_turma_check` é o resultado esperado. Depois execute **só `ROLLBACK;`** na mesma aba.
+Para mostrar a restrição de vagas, tentamos deixar uma turma com zero vagas. O PostgreSQL barra a mudança e mostra `23514` em **Messages**, com o nome `tb_turma_vagas_turma_check`. Rode o bloco no ensaio e, depois do erro, execute só `ROLLBACK;` na mesma aba.
 
 ```sql
 BEGIN;
@@ -71,11 +75,11 @@ FROM academico.tb_matricula
 WHERE id_turma = 1 AND status_matricula = 'MATRICULADO';
 ```
 
-Em **Data Output → QUERY PLAN**, mostre o tipo de leitura, as linhas retornadas, os buffers e o tempo. A turma 1 tem 60 matrículas ativas. Se aparecer `Seq Scan`, explique que o PostgreSQL escolhe o plano pelo custo estimado e pode preferir ler uma tabela pequena inteira. O índice parcial `ix_matricula_ativa_turma` contém as matrículas ativas. Mostre também os [resultados antes e depois dos quatro índices](docs/INDICES.md) e os [planos completos](evidencias/indices.json).
+Usamos a turma 1 nesse exemplo porque ela tem 60 matrículas ativas. Em **Data Output → QUERY PLAN**, dá para ver como o PostgreSQL leu a tabela, quantas linhas retornou, quais buffers acessou e quanto tempo levou. O índice `ix_matricula_ativa_turma` cobre as matrículas ativas. Mesmo com ele, pode aparecer `Seq Scan` porque, numa tabela pequena, ler tudo pode sair mais barato. Registramos os [resultados antes e depois dos quatro índices](docs/INDICES.md) e os [planos completos](evidencias/indices.json).
 
 ## 4. Disputa pela última vaga
 
-Faça estes testes **no banco de ensaio isolado**. Abra **dois Query Tools novos**, A e B, no mesmo banco como `postgres`. Cada aba tem sua própria transação. Use a seleção para executar apenas o trecho indicado. Crie as três turmas de teste uma única vez:
+Para simular dois pedidos pela última vaga, usamos duas abas do **Query Tool**, A e B. Abra as duas como `postgres` no mesmo banco de ensaio. Cada aba tem sua própria transação, então selecione só o trecho indicado a cada passo. Comece criando as três turmas de teste uma única vez.
 
 ```sql
 INSERT INTO academico.tb_turma
@@ -87,7 +91,7 @@ VALUES ('DEMO-ULTIMA', 1, 1, 'NOTURNO', 1),
 
 ### 4.1 Anomalia sem proteção
 
-Execute o bloco abaixo nas **duas abas** antes de matricular qualquer aluno. Ambas devem mostrar uma vaga livre.
+Primeiro, rode o bloco nas duas abas. As duas devem mostrar uma vaga livre. Deixe as transações abertas para fazer as matrículas no próximo passo.
 
 ```sql
 BEGIN;
@@ -96,7 +100,7 @@ FROM academico.v_vagas v JOIN academico.tb_turma t USING (id_turma)
 WHERE t.codigo_turma = 'DEMO-ULTIMA';
 ```
 
-Na **aba A**, execute o bloco abaixo. Depois execute na **aba B**, trocando somente o `1` após `SELECT` por `2`. As duas abas tentam matricular alunos diferentes na turma que ambas viram com uma vaga.
+Matricule o aluno 1 pela **aba A**. Na **aba B**, repita o bloco trocando apenas o `1` depois de `SELECT` por `2`. Cada pedido partiu da mesma informação: ainda havia uma vaga.
 
 ```sql
 INSERT INTO academico.tb_matricula (id_aluno, id_turma)
@@ -104,7 +108,7 @@ SELECT 1, id_turma FROM academico.tb_turma WHERE codigo_turma = 'DEMO-ULTIMA';
 COMMIT;
 ```
 
-Execute esta consulta após cada cenário. No primeiro, a linha `DEMO-ULTIMA` fica com **1 vaga, 2 ocupadas e −1 disponível**.
+Depois de cada cenário, confira as vagas com a consulta abaixo. Nesse primeiro teste, a linha `DEMO-ULTIMA` fica com **1 vaga, 2 ocupadas e −1 disponível**. É aí que aparece a superlotação.
 
 ```sql
 SELECT t.codigo_turma, v.vagas_turma, v.ocupadas, v.disponiveis
@@ -115,7 +119,7 @@ ORDER BY t.codigo_turma;
 
 ### 4.2 Correção por bloqueio explícito
 
-Na **aba A**, execute o bloco abaixo. Deixe a transação aberta.
+Na **aba A**, matricule o primeiro aluno e deixe a transação aberta para segurar o bloqueio da turma.
 
 ```sql
 BEGIN ISOLATION LEVEL READ COMMITTED;
@@ -123,7 +127,7 @@ SELECT academico.matricular_bloqueio(1,
     (SELECT id_turma FROM academico.tb_turma WHERE codigo_turma = 'DEMO-LOCK'));
 ```
 
-Na **aba B**, execute o bloco:
+Na **aba B**, tente matricular o segundo aluno na mesma turma.
 
 ```sql
 BEGIN ISOLATION LEVEL READ COMMITTED;
@@ -131,11 +135,11 @@ SELECT academico.matricular_bloqueio(2,
     (SELECT id_turma FROM academico.tb_turma WHERE codigo_turma = 'DEMO-LOCK'));
 ```
 
-Enquanto B estiver esperando, volte à **aba A** e execute só `COMMIT;`. A aba B vai mostrar `Turma lotada` (`P0001`). Execute só `ROLLBACK;` na B. Rode de novo a consulta de vagas. A linha `DEMO-LOCK` deve mostrar **1 vaga, 1 ocupada e 0 disponíveis**. O `FOR UPDATE` faz a segunda sessão esperar e só então recontar as matrículas.
+A **aba B** fica esperando porque A ainda está com a linha da turma bloqueada pelo `FOR UPDATE`. Volte para A e rode só `COMMIT;`. Aí B consegue recontar as matrículas e retorna `Turma lotada` (`P0001`). Rode só `ROLLBACK;` em B e confira as vagas. Em `DEMO-LOCK`, devem aparecer **1 vaga, 1 ocupada e 0 disponíveis**.
 
 ### 4.3 Correção por isolamento SERIALIZABLE
 
-Na **aba B**, leia primeiro a vaga e mantenha a transação aberta:
+Dessa vez, comece pela **aba B**. Consulte a vaga e deixe a transação aberta.
 
 ```sql
 BEGIN ISOLATION LEVEL SERIALIZABLE;
@@ -144,7 +148,7 @@ FROM academico.v_vagas v JOIN academico.tb_turma t USING (id_turma)
 WHERE t.codigo_turma = 'DEMO-SERIAL';
 ```
 
-Na **aba A**, execute o bloco inteiro para matricular o aluno 1 e confirmar:
+Na **aba A**, rode o bloco inteiro para matricular o aluno 1 e confirmar a transação.
 
 ```sql
 BEGIN ISOLATION LEVEL SERIALIZABLE;
@@ -153,18 +157,18 @@ SELECT academico.matricular_serializavel(1,
 COMMIT;
 ```
 
-Na **aba B**, dentro da transação aberta, tente matricular o aluno 2:
+Volte à **aba B** e tente matricular o aluno 2 na transação que já está aberta.
 
 ```sql
 SELECT academico.matricular_serializavel(2,
     (SELECT id_turma FROM academico.tb_turma WHERE codigo_turma = 'DEMO-SERIAL'));
 ```
 
-O resultado esperado é `40001`. Execute só `ROLLBACK;` na B. Em seguida, na B, abra uma transação nova com `BEGIN ISOLATION LEVEL SERIALIZABLE;` e repita o `SELECT` acima. A retentativa deve mostrar `Turma lotada` porque agora enxerga a primeira matrícula. Encerre com `ROLLBACK;`. A linha `DEMO-SERIAL` fica com **1 vaga, 1 ocupada e 0 disponíveis**. Compare os dois métodos em [Concorrência](docs/CONCORRENCIA.md).
+A tentativa em B deve falhar com `40001` porque a transação leu a vaga antes de A confirmar a matrícula. Em B, rode só `ROLLBACK;`. Depois, abra outra transação com `BEGIN ISOLATION LEVEL SERIALIZABLE;` e repita o `SELECT`. Dessa vez a função já vê a primeira matrícula e retorna `Turma lotada`. Encerre com `ROLLBACK;` e confira o resultado em `DEMO-SERIAL`: **1 vaga, 1 ocupada e 0 disponíveis**. Contamos como as duas soluções funcionam em [Concorrência](docs/CONCORRENCIA.md).
 
 ### Limpar as três turmas de demonstração
 
-Depois de mostrar o resultado, encerre as transações nas duas abas. Execute este bloco apenas no ensaio, onde esses três códigos foram criados para os testes. A exclusão das matrículas de teste também remove os históricos ligados a elas pela FK com `ON DELETE CASCADE`.
+Ao terminar, feche as transações nas duas abas. Rode a limpeza no mesmo banco de ensaio em que criou as turmas. A chave estrangeira com `ON DELETE CASCADE` remove junto os históricos das matrículas de teste.
 
 ```sql
 BEGIN;
@@ -182,7 +186,7 @@ COMMIT;
 
 ## 5. Segurança por linha (RLS)
 
-No ensaio, como `postgres`, crie uma vez o login didático. Se já foi criado e funciona, use a conexão existente.
+Para ver o que muda de um perfil para outro, usamos um login ligado ao aluno 1. Crie esse login uma vez no banco de ensaio, conectado como `postgres`. Se já fez esse passo, use a conexão que você cadastrou.
 
 ```sql
 BEGIN;
@@ -193,7 +197,7 @@ VALUES ('aluno_demo_pgadmin', 1);
 COMMIT;
 ```
 
-Registre **BD2 – Aluno** no pgAdmin com o mesmo host, porta e banco do ensaio, usuário `aluno_demo_pgadmin` e senha didática `bd2_demo_local`. Abra o Query Tool nessa conexão e também na conexão de administrador. Execute a mesma consulta nas duas:
+Cadastre a conexão **BD2 – Aluno** no pgAdmin. Use o mesmo host, a mesma porta e o mesmo banco da conexão de ensaio, com o usuário `aluno_demo_pgadmin` e a senha de teste `bd2_demo_local`. Abra o Query Tool nas duas conexões e rode a mesma consulta em cada uma.
 
 ```sql
 SELECT session_user AS login,
@@ -202,11 +206,11 @@ SELECT session_user AS login,
 FROM academico.v_historico;
 ```
 
-Com a carga original e após a limpeza das turmas de teste, o administrador vê **3 e 3**. O login do aluno 1 vê **3 e 0**. Mostre que a consulta é a mesma e que o login muda. A view usa as permissões do usuário que chama a consulta e o RLS filtra as linhas. Veja [os papéis e as permissões](docs/SEGURANCA.md).
+Com as turmas de teste removidas, o administrador vê três históricos de cada aluno. Já na conexão do aluno 1, aparecem os três dele e zero do aluno 2. A consulta é a mesma nas duas abas. A view usa as permissões do login conectado e o RLS filtra as linhas que ele pode ver. Os outros perfis estão no [guia de permissões](docs/SEGURANCA.md).
 
 ## 6. Backup e restauração ao vivo
 
-No PowerShell, na pasta extraída, confirme que `python --version` mostra Python 3.10 ou superior. Se o Windows abrir a Microsoft Store, use o caminho do Python instalado ou `py -3` no lugar de `python`. O script de backup usa apenas a biblioteca padrão. Pare as escritas no banco de ensaio durante a cópia.
+Antes do backup, confira com `python --version` se você tem Python 3.10 ou superior. Se o Windows abrir a Microsoft Store, tente `py -3` ou use o caminho do Python instalado. O script usa só a biblioteca padrão. Durante a cópia, deixe o banco de ensaio sem escritas para que as assinaturas correspondam ao que entrou no backup.
 
 ```powershell
 $bd2Backup = "backups\ensaio-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
@@ -215,13 +219,13 @@ docker run -d --name bd2-restore-demo -e POSTGRES_PASSWORD=postgres -p 127.0.0.1
 docker exec bd2-restore-demo pg_isready -h 127.0.0.1 -U postgres -d postgres
 ```
 
-Espere `Backup concluido` antes de criar o destino. Repita só `pg_isready` até `accepting connections`. Se o nome ou a porta já estiverem ocupados, escolha outros para o novo destino. No **mesmo PowerShell**, execute:
+Quando aparecer `Backup concluido`, crie o contêiner de destino. Repita o `pg_isready` até aparecer `accepting connections`. Se o nome ou a porta estiverem ocupados, escolha outros e use os novos valores na restauração e no pgAdmin. Rode o próximo comando no **mesmo PowerShell** para aproveitar a variável `$bd2Backup`.
 
 ```powershell
 python .\scripts\backup.py restore --container bd2-restore-demo --dir $bd2Backup
 ```
 
-Mostre `"restaurado": true` e `"tabelas": 17`. O script compara as assinaturas do conteúdo das tabelas. No pgAdmin, registre **BD2 – Restaurado** com host `127.0.0.1`, porta `55441`, banco `postgres`, usuário `postgres` e senha `postgres`. Execute no original e no restaurado:
+Quando a restauração termina, o script compara as assinaturas do conteúdo e mostra `"restaurado": true` e `"tabelas": 17`. Para conferir também no pgAdmin, cadastre **BD2 – Restaurado** com host `127.0.0.1`, porta `55441`, banco `postgres`, usuário `postgres` e senha `postgres`. Rode a consulta abaixo no original e no restaurado.
 
 ```sql
 SELECT (SELECT count(*) FROM academico.tb_aluno) AS alunos,
@@ -230,11 +234,11 @@ SELECT (SELECT count(*) FROM academico.tb_aluno) AS alunos,
        (SELECT count(*) FROM academico.tb_historico) AS historicos;
 ```
 
-As duas conexões devem retornar os mesmos números. Se fez a limpeza das turmas de teste, espere **120 | 10 | 360 | 360**. O backup recupera os papéis e as permissões. As senhas de login são configuradas separadamente no destino se forem necessárias. Veja [o procedimento completo](docs/OPERACAO.md).
+As contagens precisam bater. Depois de limpar as turmas de teste, espere **120 alunos, 10 turmas, 360 matrículas e 360 históricos** nas duas conexões. A restauração também recupera os papéis e as permissões. Se precisar entrar com esses logins no destino, configure as senhas por lá. O passo a passo completo está no [guia de backup](docs/OPERACAO.md).
 
 ## Roteiro para o dia
 
-Prepare as conexões e deixe os comandos separados em abas antes da apresentação. Dividimos os **9 minutos de demonstração** assim.
+Para caber nos nove minutos, vamos deixar as conexões prontas e os comandos separados em abas. Planejamos a demonstração assim.
 
 | Tempo | O que mostrar ao vivo |
 | --- | --- |
@@ -244,44 +248,25 @@ Prepare as conexões e deixe os comandos separados em abas antes da apresentaç�
 | 1 min | Mesma consulta de histórico como administrador e como aluno. |
 | 3 min | Restauração em destino vazio e conferência no pgAdmin. |
 
-Para a restauração ao vivo, já deixe o arquivo de backup gerado e o contêiner de destino **vazio e iniciado**. Durante a apresentação, execute a restauração e confira os dados. Depois vêm aproximadamente **9 minutos de arguição individual**. Cada integrante deve saber explicar também as frentes dos colegas.
+No dia, vamos levar o backup pronto e deixar o contêiner de destino vazio e já iniciado. Ao vivo, mostramos a restauração e comparamos os dados. Depois temos cerca de nove minutos de arguição individual. Cada um precisa saber explicar também as partes dos colegas.
 
-Ensaiamos a demonstração com PostgreSQL 17.11 e reunimos os resultados em [evidencias/](evidencias/). Ainda precisamos repetir o procedimento no pacote oficial da disciplina. Os integrantes e as responsabilidades já registradas estão em [AUTORES.md](AUTORES.md).
+Fizemos esse ensaio com PostgreSQL 17.11 e guardamos os resultados em [evidencias/](evidencias/). Falta repetir no pacote da disciplina. Os nomes do grupo e a divisão de tarefas registrada estão em [AUTORES.md](AUTORES.md).
 
 ## Validação automatizada opcional
 
-Em outro ensaio vazio, na raiz do projeto, crie um ambiente Python, instale [scripts/requirements.txt](scripts/requirements.txt) e configure `BD2_DSN` com os dados desse banco. Execute `scripts/validar.py` com as etapas `base`, `views`, `indices`, `concorrencia` e `seguranca`, nessa ordem. Cada etapa grava evidências em `evidencias/`. Use essa sequência como alternativa à instalação manual no mesmo banco, pois ela também instala os objetos. O [registro de verificação](evidencias/STATUS.md) descreve os testes anteriores.
+Também deixamos um caminho automatizado para quem quiser repetir os testes. Comece com outro banco de ensaio vazio, porque o validador também instala os objetos. Na raiz do projeto, crie um ambiente Python, instale as [dependências](scripts/requirements.txt) e coloque os dados da conexão em `BD2_DSN`. Rode `scripts/validar.py` nas etapas `base`, `views`, `indices`, `concorrencia` e `seguranca`, nessa ordem. Cada etapa grava o resultado em `evidencias/`. Os testes que já fizemos estão descritos no [registro de verificação](evidencias/STATUS.md).
 
 ## Decisões e limites desta etapa
 
-- `tb_log_matricula.id_matricula` permanece sem FK, conforme o modelo lógico
-  fornecido. A tabela recebe apenas o registro explícito da carga inicial; não
-  há gatilho de auditoria neste marco.
-- As PKs compostas representam as associações currículo–disciplina e
-  disciplina–requisito. O CHECK de pré-requisito impede apenas autorreferência
-  direta; o tratamento de ciclos indiretos é feito nas consultas recursivas,
-  que usam o caminho percorrido para garantir a terminação.
-- O índice único parcial permite no máximo um currículo ativo por curso.
-- A restrição EXCLUDE de sala segue o SQL fornecido e tem escopo global: não
-  distingue períodos letivos. Por isso a carga cria horários apenas para a
-  oferta de 2026/2. Essa regra precisa ser revista se a carga passar a
-  reutilizar sala e horário em semestres diferentes.
-- A fórmula de média com P3 segue o SQL de referência. Regras acadêmicas
-  adicionais não representadas nele devem ser confirmadas antes de alterá-la.
-- As notas de 2026/2 simulam o fim do semestre, e não a data atual. A consulta
-  08 avalia a elegibilidade **no início** do semestre-alvo: só considera
-  aprovações de períodos encerrados antes dele e ignora o resultado simulado da
-  matrícula do próprio semestre-alvo.
-- O healthcheck do `docker-compose.yml` testa `pg_isready -h 127.0.0.1`, e não o
-  socket Unix. Ao inicializar um volume novo, a imagem oficial do PostgreSQL sobe
-  um servidor temporário que escuta apenas no socket e depois o desliga. Uma
-  verificação pelo socket pode, por isso, reportar "pronto" cedo demais e fazer o
-  passo seguinte falhar com `the database system is shutting down`. Só o servidor
-  definitivo aceita conexões TCP.
-- As duas turmas de Programação Paralela ficam intencionalmente sem matrículas,
-  pois nenhum aluno tem aprovação em Sistemas Operacionais. Isso dá à consulta
-  04 um caso real de junção externa.
+- Seguimos o modelo lógico e deixamos `tb_log_matricula.id_matricula` sem chave estrangeira. Por enquanto, a tabela tem só o registro que inserimos na carga inicial. Ainda não temos gatilho de auditoria.
+- Usamos chaves primárias compostas nas relações entre currículo e disciplina e entre disciplina e pré-requisito. O `CHECK` impede que uma disciplina seja pré-requisito de si mesma. Se houver um ciclo passando por várias disciplinas, a consulta recursiva usa o caminho já percorrido para evitar um loop.
+- Com o índice único parcial, cada curso pode ter no máximo um currículo ativo.
+- Mantivemos a restrição de salas do SQL fornecido. Ela impede a sobreposição de horários sem distinguir semestres, então só colocamos horários na oferta de 2026/2. Se formos reutilizar salas e horários em outros semestres, precisamos rever essa regra.
+- Para calcular a média com P3, seguimos a fórmula do SQL de referência. Antes de mudar a fórmula, precisamos confirmar se a disciplina prevê alguma regra a mais.
+- Preenchemos as notas de 2026/2 como se o semestre já tivesse acabado. A consulta 08 responde o que o aluno poderia cursar **no início** do semestre escolhido. Por isso, ela só conta aprovações de semestres que já tinham acabado e ignora a nota simulada do próprio semestre.
+- No `docker-compose.yml`, usamos `pg_isready -h 127.0.0.1` porque o PostgreSQL sobe primeiro um servidor temporário que aceita conexões pelo socket Unix. Se checarmos só o socket, o contêiner pode parecer pronto e o próximo passo falhar com `the database system is shutting down`. A conexão TCP só fica disponível quando o servidor definitivo sobe.
+- Deixamos as duas turmas de Programação Paralela vazias porque nenhum aluno passou em Sistemas Operacionais. Na consulta 04, dá para ver que a junção externa inclui essas turmas mesmo sem matrículas.
 
 ## Empacotamento
 
-O ZIP do GitHub já contém o README, os SQL, os scripts, o diagrama e as evidências versionadas. Em um clone Git, `python scripts/empacotar.py` também gera um ZIP local em `entrega/`. Backups, ambientes Python e arquivos particulares ficam fora da publicação.
+O ZIP do GitHub já traz o material da entrega, incluindo os scripts, o diagrama e as evidências. Se você clonou o repositório, também pode rodar `python scripts/empacotar.py` para gerar um ZIP na pasta `entrega/`. Deixamos backups, ambientes Python e arquivos pessoais fora da publicação.

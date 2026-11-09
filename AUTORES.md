@@ -1,12 +1,12 @@
 # Autores
 
-Somos o grupo responsável pelo projeto de Banco de Dados II.
+Aqui estão os integrantes do nosso grupo.
 
 ## Yago Santos Porto
 
 Matrícula: 2612130022
 
-Fiquei com a modelagem física e a análise de desempenho.
+Cuidei da modelagem física e da análise de desempenho.
 
 ## Pedro Ayan Machado Cordeiro
 

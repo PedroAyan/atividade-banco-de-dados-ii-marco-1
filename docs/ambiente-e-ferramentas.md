@@ -33,7 +33,7 @@ as credenciais, a porta, o nome do banco e os comandos de inicialização **não
 estão documentados aqui** e devem ser obtidos no guia oficial. Siga o guia do
 professor para iniciar o ambiente e confirmar a versão real com `SHOW server_version` e a imagem Compose do pacote.
 
-Não crie um banco de dados à parte e não altere a configuração Docker fornecida.
+Na validação com o professor, use o banco e a configuração Docker do pacote da disciplina.
 Não apague volumes do Docker nem os dados do banco do curso.
 
 > O arquivo `docker-compose.yml` deste repositório é a configuração usada nos

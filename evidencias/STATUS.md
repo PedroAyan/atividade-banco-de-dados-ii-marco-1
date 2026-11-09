@@ -2,11 +2,11 @@
 
 Instalamos o projeto completo em um cluster novo de PostgreSQL 17.11, com DDL/carga/consultas e validação do Marco 1, três views, materialized view com refresh concorrente, quatro índices, funções de concorrência e segurança. Repetimos a instalação do zero com o código final e as verificações passaram. Nenhum volume ou banco anterior foi apagado; o Compose e SQL do Marco 1 permanecem intactos.
 
-Os planos de sete execuções antes/depois de cada índice estão em indices.json. A demonstração sincronizada de duas conexões reproduziu superlotação 2/1; ambas as correções deixaram 1/1, com 40001 e retentativa no cenário SERIALIZABLE. As turmas artificiais foram removidas apenas dos clusters de teste.
+Guardamos em `indices.json` os planos das sete execuções de cada consulta antes e depois dos índices. Quando rodamos as duas conexões juntas, conseguimos colocar dois alunos numa turma com uma vaga. Com cada uma das correções, ficou só uma matrícula. No teste com `SERIALIZABLE`, vimos o erro `40001` e repetimos a transação. Depois, removemos as turmas artificiais dos bancos de teste.
 
-Login real sem privilégios administrativos leu três históricos próprios e zero de outro aluno. Alterar variável de sessão não mudou a identidade. Escrita direta da secretaria foi negada e atualização de nota pela coordenação foi executada com rollback. Ver seguranca.json.
+Entramos com o login de um aluno e conseguimos ver os três históricos dele e nenhum de outro aluno. Tentamos mudar a identidade por uma variável de sessão e o filtro continuou o mesmo. Também tentamos inserir uma matrícula direto como secretaria e o banco barrou. A coordenação conseguiu atualizar uma nota, e depois desfizemos a alteração com rollback. Os resultados estão em `seguranca.json`.
 
-Backup binário foi restaurado do zero em outro contêiner, comparando hashes e contagens de 17 tabelas. Índices, views, funções, políticas, ACLs efetivas, concessões de colunas, memberships e sequências coincidiram. O login restaurado manteve o RLS. O procedimento final foi repetido em novo destino após corrigir a recuperação das ACLs dos construtores RANGE.
+Restauramos o backup binário em outro contêiner e comparamos as contagens e os hashes das 17 tabelas. Conferimos também índices, views, funções, políticas, permissões efetivas, concessões por coluna, vínculos entre papéis e sequências. O login restaurado continuou vendo apenas os próprios dados. Depois de corrigir a restauração das permissões dos construtores `RANGE`, repetimos o teste em um destino novo.
 
 Limites: não houve validação no pacote Docker oficial nem pelo Query Tool do pgAdmin; falta confirmar a versão 16/17 contra o pacote real. Não houve benchmark de carga representativa, PITR/WAL ou desastre físico. Os integrantes e as responsabilidades registradas estão em [AUTORES.md](../AUTORES.md). A inspeção/exportação do diagrama no draw.io continua pendente conforme o guia original. O bônus opcional não foi implementado.
 

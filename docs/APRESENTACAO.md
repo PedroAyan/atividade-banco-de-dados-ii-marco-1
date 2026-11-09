@@ -1,6 +1,6 @@
 # Roteiro de apresentação do Marco 2
 
-No [README](../README.md#baixar-e-preparar-na-sala), deixamos os comandos que usamos para preparar o PostgreSQL e conectar o pgAdmin. Dividimos a apresentação em cerca de nove minutos no [roteiro para o dia](../README.md#roteiro-para-o-dia).
+Deixamos no [README](../README.md#baixar-e-preparar-na-sala) a montagem do banco e da conexão no pgAdmin. Para ensaiar com o cronômetro, usamos a divisão de tempo do [roteiro](../README.md#roteiro-para-o-dia).
 
 1. Mostrar o schema e uma consulta ou view. Tentar gravar uma turma com zero vagas e explicar a restrição.
 2. Executar um plano com EXPLAIN ANALYZE e comparar com as [evidências de antes e depois dos índices](INDICES.md).
